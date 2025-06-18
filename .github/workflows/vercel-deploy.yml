@@ -2,7 +2,7 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - master
+      - main
 
 # ジョブを定義
 jobs:
@@ -24,19 +24,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile # 依存関係をインストール
 
-      - name: Run database migrations
-        run: npx prisma migrate deploy
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+      # - name: Run database migrations
+      #   run: npx prisma migrate deploy
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      #     DIRECT_URL: ${{ secrets.DIRECT_URL }}
 
       - name: Build Next.js project
         run: pnpm build # ビルドする
 
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25 # Vercelにデプロイする。
-        with: # with以降に必要なパラメータを渡す
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod' # 本番環境に反映
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v25 # Vercelにデプロイする。
+      #   with: # with以降に必要なパラメータを渡す
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     vercel-args: '--prod' # 本番環境に反映

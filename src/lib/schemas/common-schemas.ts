@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { TODO_PRIORITIES, type TodoPriority } from '@/constants/todo-priority'
 
 /**
  * 汎用的なバリデーションスキーマの集約ファイル
@@ -27,27 +26,6 @@ export const nameSchema = requiredStringSchema.max(50, {
   message: '名前は50文字以下で入力してください',
 })
 
-// タイトル関連のスキーマ
-export const titleSchema = requiredStringSchema.max(100, {
-  message: 'タイトルは100文字以下で入力してください',
-})
-
-// 説明文関連のスキーマ
-export const descriptionSchema = z
-  .string()
-  .max(500, { message: '説明は500文字以下で入力してください' })
-  .nullable()
-
-// ブール値のスキーマ
-export const booleanSchema = z.boolean()
-
-// 期日のスキーマ（ISO文字列形式での入力を受け取り、日付に変換してバリデーション）
-export const dueDateSchema = z.date().nullable()
-
-export const parentIdSchema = z
-  .string()
-  .nullable()
-
 // パスワード確認用のrefineヘルパー関数
 export function createPasswordConfirmationRefine<
   T extends { password: string; confirmPassword: string },
@@ -57,16 +35,3 @@ export function createPasswordConfirmationRefine<
     path: ['confirmPassword'],
   })
 }
-
-// 優先度のスキーマ
-export const prioritySchema = z
-  .number()
-  .refine(
-    (value) => {
-      return Object.values(TODO_PRIORITIES).includes(value as TodoPriority)
-    },
-    { message: '有効な優先度を選択してください' },
-  )
-  .transform((value) => {
-    return value === TODO_PRIORITIES.UN_SELECTED ? null : value
-  })

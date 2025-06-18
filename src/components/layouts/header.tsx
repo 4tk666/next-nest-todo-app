@@ -14,16 +14,13 @@ export async function Header() {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="text-xl font-bold text-gray-800">
-                NextTodo
+                NextTemplate
               </Link>
             </div>
           </div>
           <div className="flex items-center">
             {session ? (
               <div className="flex items-center space-x-4">
-                <LinkButton href="/todos" variant="primary">
-                  Todoリスト
-                </LinkButton>
                 <SignOutButton />
               </div>
             ) : (

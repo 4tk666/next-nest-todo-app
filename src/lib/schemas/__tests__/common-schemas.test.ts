@@ -1,17 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { z } from 'zod'
 import {
   requiredStringSchema,
   emailSchema,
   passwordSchema,
   nameSchema,
-  titleSchema,
-  descriptionSchema,
-  booleanSchema,
-  dueDateSchema,
-  parentIdSchema,
   createPasswordConfirmationRefine,
 } from '../common-schemas'
+import z from 'zod'
 
 describe('common-schemas', () => {
   describe('requiredStringSchema', () => {
@@ -143,195 +138,91 @@ describe('common-schemas', () => {
       const maxLengthName = 'あ'.repeat(50)
       expect(() => nameSchema.parse(maxLengthName)).not.toThrow()
     })
-  })
 
-  describe('titleSchema', () => {
-    it('有効なタイトルを受け入れる', () => {
-      const validTitles = [
-        'タスクのタイトル',
-        'Meeting Notes',
-        'プロジェクト計画',
-        'a',
-      ]
+    describe('createPasswordConfirmationRefine', () => {
+      const testSchema = z.object({
+        password: z.string(),
+        confirmPassword: z.string(),
+        email: z.string().email(),
+      })
 
-      for (const title of validTitles) {
-        expect(() => titleSchema.parse(title)).not.toThrow()
-        expect(titleSchema.parse(title)).toBe(title)
-      }
-    })
+      const refinedSchema = createPasswordConfirmationRefine(testSchema)
 
-    it('100文字を超えるタイトルを拒否する', () => {
-      const longTitle = 'a'.repeat(101)
-      expect(() => titleSchema.parse(longTitle)).toThrow()
-    })
+      it('パスワードと確認用パスワードが一致する場合に成功する', () => {
+        const validData = {
+          password: 'password123',
+          confirmPassword: 'password123',
+          email: 'test@example.com',
+        }
 
-    it('空文字列を拒否する', () => {
-      expect(() => titleSchema.parse('')).toThrow()
-    })
+        expect(() => refinedSchema.parse(validData)).not.toThrow()
+        expect(refinedSchema.parse(validData)).toEqual(validData)
+      })
 
-    it('100文字ちょうどのタイトルを受け入れる', () => {
-      const maxLengthTitle = 'a'.repeat(100)
-      expect(() => titleSchema.parse(maxLengthTitle)).not.toThrow()
-    })
-  })
+      it('パスワードと確認用パスワードが一致しない場合にエラーを返す', () => {
+        const invalidData = {
+          password: 'password123',
+          confirmPassword: 'differentPassword',
+          email: 'test@example.com',
+        }
 
-  describe('descriptionSchema', () => {
-    it('有効な説明文を受け入れる', () => {
-      const validDescriptions = [
-        'これは説明文です',
-        'Task description',
-        '',
-        'a'.repeat(500),
-      ]
+        try {
+          refinedSchema.parse(invalidData)
+          expect.fail('エラーが発生するべきです')
+        } catch (error) {
+          expect(error).toBeInstanceOf(z.ZodError)
+          const zodError = error as z.ZodError
+          expect(zodError.issues).toHaveLength(1)
+          expect(zodError.issues[0].path).toEqual(['confirmPassword'])
+          expect(zodError.issues[0].message).toBe(
+            'パスワードと確認用パスワードが一致しません',
+          )
+        }
+      })
 
-      for (const description of validDescriptions) {
-        expect(() => descriptionSchema.parse(description)).not.toThrow()
-        expect(descriptionSchema.parse(description)).toBe(description)
-      }
-    })
+      it('他のフィールドのバリデーションエラーも適切に処理する', () => {
+        const invalidData = {
+          password: 'password123',
+          confirmPassword: 'password123',
+          email: 'invalid-email',
+        }
 
-    it('nullを受け入れる', () => {
-      expect(() => descriptionSchema.parse(null)).not.toThrow()
-      expect(descriptionSchema.parse(null)).toBeNull()
-    })
+        try {
+          refinedSchema.parse(invalidData)
+          expect.fail('エラーが発生するべきです')
+        } catch (error) {
+          expect(error).toBeInstanceOf(z.ZodError)
+          const zodError = error as z.ZodError
+          expect(
+            zodError.issues.some((issue) => issue.path.includes('email')),
+          ).toBe(true)
+        }
+      })
 
-    it('500文字を超える説明文を拒否する', () => {
-      const longDescription = 'a'.repeat(501)
-      expect(() => descriptionSchema.parse(longDescription)).toThrow()
-    })
+      it('複数のエラーがある場合に両方のエラーを報告する', () => {
+        const invalidData = {
+          password: 'password123',
+          confirmPassword: 'differentPassword',
+          email: 'invalid-email',
+        }
 
-    it('500文字ちょうどの説明文を受け入れる', () => {
-      const maxLengthDescription = 'a'.repeat(500)
-      expect(() => descriptionSchema.parse(maxLengthDescription)).not.toThrow()
-    })
-  })
-
-  describe('booleanSchema', () => {
-    it('有効なブール値を受け入れる', () => {
-      expect(() => booleanSchema.parse(true)).not.toThrow()
-      expect(() => booleanSchema.parse(false)).not.toThrow()
-      expect(booleanSchema.parse(true)).toBe(true)
-      expect(booleanSchema.parse(false)).toBe(false)
-    })
-
-    it('ブール値以外を拒否する', () => {
-      const invalidValues = ['true', 'false', 1, 0, null, undefined, {}]
-
-      for (const value of invalidValues) {
-        expect(() => booleanSchema.parse(value)).toThrow()
-      }
-    })
-  })
-
-  describe('dueDateSchema', () => {
-    it('有効な日付を受け入れる', () => {
-      const date = new Date('2023-10-01T00:00:00Z')
-      const result = dueDateSchema.parse(date)
-      expect(result).toEqual(date)
-    })
-
-    it('nullをnullのまま返す', () => {
-      const result = dueDateSchema.parse(null)
-      expect(result).toBeNull()
-    })
-  })
-
-  describe('parentIdSchema', () => {
-    it('文字列を受け入れる', () => {
-      const id = 'todo-123'
-      const result = parentIdSchema.parse(id)
-      expect(result).toBe(id)
-    })
-
-    it('nullを受け入れる（親がない場合）', () => {
-      expect(() => parentIdSchema.parse(null)).not.toThrow()
-      expect(parentIdSchema.parse(null)).toBeNull()
-    })
-  })
-
-  describe('createPasswordConfirmationRefine', () => {
-    const testSchema = z.object({
-      password: z.string(),
-      confirmPassword: z.string(),
-      email: z.string().email(),
-    })
-
-    const refinedSchema = createPasswordConfirmationRefine(testSchema)
-
-    it('パスワードと確認用パスワードが一致する場合に成功する', () => {
-      const validData = {
-        password: 'password123',
-        confirmPassword: 'password123',
-        email: 'test@example.com',
-      }
-
-      expect(() => refinedSchema.parse(validData)).not.toThrow()
-      expect(refinedSchema.parse(validData)).toEqual(validData)
-    })
-
-    it('パスワードと確認用パスワードが一致しない場合にエラーを返す', () => {
-      const invalidData = {
-        password: 'password123',
-        confirmPassword: 'differentPassword',
-        email: 'test@example.com',
-      }
-
-      try {
-        refinedSchema.parse(invalidData)
-        expect.fail('エラーが発生するべきです')
-      } catch (error) {
-        expect(error).toBeInstanceOf(z.ZodError)
-        const zodError = error as z.ZodError
-        expect(zodError.issues).toHaveLength(1)
-        expect(zodError.issues[0].path).toEqual(['confirmPassword'])
-        expect(zodError.issues[0].message).toBe(
-          'パスワードと確認用パスワードが一致しません',
-        )
-      }
-    })
-
-    it('他のフィールドのバリデーションエラーも適切に処理する', () => {
-      const invalidData = {
-        password: 'password123',
-        confirmPassword: 'password123',
-        email: 'invalid-email',
-      }
-
-      try {
-        refinedSchema.parse(invalidData)
-        expect.fail('エラーが発生するべきです')
-      } catch (error) {
-        expect(error).toBeInstanceOf(z.ZodError)
-        const zodError = error as z.ZodError
-        expect(
-          zodError.issues.some((issue) => issue.path.includes('email')),
-        ).toBe(true)
-      }
-    })
-
-    it('複数のエラーがある場合に両方のエラーを報告する', () => {
-      const invalidData = {
-        password: 'password123',
-        confirmPassword: 'differentPassword',
-        email: 'invalid-email',
-      }
-
-      try {
-        refinedSchema.parse(invalidData)
-        expect.fail('エラーが発生するべきです')
-      } catch (error) {
-        expect(error).toBeInstanceOf(z.ZodError)
-        const zodError = error as z.ZodError
-        expect(zodError.issues.length).toBeGreaterThan(1)
-        expect(
-          zodError.issues.some((issue) => issue.path.includes('email')),
-        ).toBe(true)
-        expect(
-          zodError.issues.some((issue) =>
-            issue.path.includes('confirmPassword'),
-          ),
-        ).toBe(true)
-      }
+        try {
+          refinedSchema.parse(invalidData)
+          expect.fail('エラーが発生するべきです')
+        } catch (error) {
+          expect(error).toBeInstanceOf(z.ZodError)
+          const zodError = error as z.ZodError
+          expect(zodError.issues.length).toBeGreaterThan(1)
+          expect(
+            zodError.issues.some((issue) => issue.path.includes('email')),
+          ).toBe(true)
+          expect(
+            zodError.issues.some((issue) =>
+              issue.path.includes('confirmPassword'),
+            ),
+          ).toBe(true)
+        }
+      })
     })
   })
 })
