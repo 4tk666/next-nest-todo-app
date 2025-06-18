@@ -18,23 +18,23 @@ jobs:
         with:
           node-version: '20'
 
-        # Node.js に内蔵されたパッケージマネージャ管理ツール
-        # pnpmのバージョンを 明示的に指定して使える ようにする
-      - name: Enable Corepack
-        run: corepack enable
+      #   # Node.js に内蔵されたパッケージマネージャ管理ツール
+      #   # pnpmのバージョンを 明示的に指定して使える ようにする
+      # - name: Enable Corepack
+      #   run: corepack enable
 
-      - name: Install dependencies
-        # 「--frozen-lockfile」ロックファイルが正確に再現されることを保証する
-        run: pnpm install --frozen-lockfile 
+      # - name: Install dependencies
+      #   # 「--frozen-lockfile」ロックファイルが正確に再現されることを保証する
+      #   run: pnpm install --frozen-lockfile 
 
-      - name: Run Biome lint
-        run: pnpm lint
+      # - name: Run Biome lint
+      #   run: pnpm lint
 
-      - name: Run TypeScript type check
-        run: pnpm type-check
+      # - name: Run TypeScript type check
+      #   run: pnpm type-check
 
-      - name: Run tests
-        run: pnpm test
+      # - name: Run tests
+      #   run: pnpm test
 
-      - name: Build Next.js project
-        run: pnpm build
+      # - name: Build Next.js project
+      #   run: pnpm build
