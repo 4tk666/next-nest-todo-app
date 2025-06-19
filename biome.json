@@ -35,6 +35,18 @@
       }
     }
   },
+  "overrides": [
+    {
+      "include": ["apps/backend/**/*.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useImportType": "off"
+          }
+        }
+      }
+    }
+  ],
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
