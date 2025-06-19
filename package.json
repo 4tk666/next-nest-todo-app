@@ -1,0 +1,16 @@
+{
+  "name": "ai-job-interview-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.7.0",
+  "scripts": {
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev:backend": "pnpm --filter backend start:dev"
+  },
+  "dependencies": {
+    "zod": "^3.25.23"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4"
+  }
+}
