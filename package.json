@@ -4,21 +4,21 @@
   "private": true,
   "packageManager": "pnpm@9.7.0",
   "scripts": {
-    "build": "pnpm --filter frontend build && pnpm --filter backend build",
-    "dev:frontend": "pnpm --filter frontend dev",
-    "dev:backend": "pnpm --filter backend start:dev",
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
     "format": "biome format --write .",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "check": "biome check .",
     "check:fix": "biome check --write .",
-    "type-check": "pnpm --filter frontend type-check && pnpm --filter backend type-check",
-    "test": "pnpm --filter frontend test && pnpm --filter backend test"
+    "type-check": "turbo run type-check",
+    "test": "turbo run test"
   },
   "dependencies": {
     "zod": "^3.25.23"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4"
+    "@biomejs/biome": "^1.9.4",
+    "turbo": "^2.5.4"
   }
 }
