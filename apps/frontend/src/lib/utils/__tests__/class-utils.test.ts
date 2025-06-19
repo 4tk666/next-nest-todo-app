@@ -59,9 +59,9 @@ describe('cn (class-utils)', () => {
         'bg-blue-600 text-white': true,
         'hover:bg-blue-700': true,
         'disabled:opacity-50': false,
-      }
+      },
     )
-    
+
     expect(result).toContain('rounded-md')
     expect(result).toContain('border')
     expect(result).toContain('px-4')

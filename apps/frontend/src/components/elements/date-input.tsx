@@ -1,8 +1,8 @@
 'use client'
 
+import { ja } from 'date-fns/locale'
 import { useState } from 'react'
 import DatePicker from 'react-datepicker'
-import { ja } from 'date-fns/locale'
 import { cn } from '../../lib/utils/class-utils'
 
 export type DateInputProps = {

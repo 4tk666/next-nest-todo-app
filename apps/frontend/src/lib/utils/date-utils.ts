@@ -24,7 +24,6 @@ export function parseStringToDate({
   dateString,
   formatType = 'yyyy/MM/dd',
 }: FormatStringToDate): Date | undefined {
-  
   const parsedDate = parse(dateString, formatType, new Date())
   if (!isValid(parsedDate)) return
   return parsedDate
@@ -54,12 +53,12 @@ export function getDateOnly(date: Date): Date {
  */
 export function isDateOverdue(dueDate: string): boolean {
   if (!dueDate) return false
-  
+
   const parsedDueDate = parseStringToDate({ dateString: dueDate })
   if (!parsedDueDate) return false
-  
+
   const today = getDateOnly(createDate())
   const dueDateOnly = getDateOnly(parsedDueDate)
-  
+
   return dueDateOnly < today
 }

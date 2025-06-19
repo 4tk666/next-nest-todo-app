@@ -1,5 +1,5 @@
-import type { ReactNode, ComponentPropsWithoutRef } from 'react'
 import Link from 'next/link'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { cn } from '../../lib/utils/class-utils'
 
 type LinkButtonVariant = 'primary' | 'outline'

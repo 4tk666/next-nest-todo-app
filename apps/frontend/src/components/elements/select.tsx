@@ -2,7 +2,7 @@
 
 import * as RadSelect from '@radix-ui/react-select'
 import { clsx } from 'clsx'
-import { FiChevronDown, FiCheck } from 'react-icons/fi'
+import { FiCheck, FiChevronDown } from 'react-icons/fi'
 
 export type SelectOption = {
   /** オプションの値 */
@@ -42,7 +42,7 @@ export function Select({
   id,
   name,
   options,
-  placeholder = "選択してください",
+  placeholder = '選択してください',
   defaultValue,
   value,
   onValueChange,
@@ -134,9 +134,7 @@ export function Select({
                 <RadSelect.ItemIndicator className="absolute left-2 inline-flex items-center">
                   <FiCheck className="h-4 w-4" />
                 </RadSelect.ItemIndicator>
-                <RadSelect.ItemText>
-                  {option.label}
-                </RadSelect.ItemText>
+                <RadSelect.ItemText>{option.label}</RadSelect.ItemText>
               </RadSelect.Item>
             ))}
           </RadSelect.Viewport>

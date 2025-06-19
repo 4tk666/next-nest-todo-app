@@ -1,14 +1,14 @@
 'use server'
 
+import { redirect } from 'next/navigation'
 import { signIn } from '../../../auth'
+import type { ActionState } from '../../../types/form'
 import { prisma } from '../../prisma'
 import {
   type SignUpFormValues,
   signUpSchema,
 } from '../../schemas/auth/sign-up-schema'
 import { hashPassword } from '../../utils/auth-utils'
-import type { ActionState } from '../../../types/form'
-import { redirect } from 'next/navigation'
 
 export async function signUpAction(
   formData: FormData,

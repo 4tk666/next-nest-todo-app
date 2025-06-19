@@ -1,8 +1,8 @@
 'use client'
 
+import clsx from 'clsx'
 import { useFormStatus } from 'react-dom'
 import { FaGithub } from 'react-icons/fa'
-import clsx from 'clsx'
 import { Button } from '../../elements/button'
 
 /**

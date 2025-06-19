@@ -1,6 +1,6 @@
-import { auth } from '../../auth'
 import { clsx } from 'clsx'
 import Link from 'next/link'
+import { auth } from '../../auth'
 import { LinkButton } from '../elements/link-button'
 import { SignOutButton } from '../features/auth/sign-out-button'
 

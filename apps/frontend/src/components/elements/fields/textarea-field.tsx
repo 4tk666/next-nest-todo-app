@@ -16,10 +16,10 @@ type TextareaFieldProps = TextareaProps & {
 
 /**
  * フォーム用Textarea Field
- * 
+ *
  * ラベル、エラー表示、バリデーション機能を含む統合型のTextareaコンポーネントです。
  * フォーム内での使用を想定し、アクセシビリティとユーザビリティを考慮した設計となっています。
- * 
+ *
  * @example
  * ```tsx
  * // 非制御コンポーネントとして使用
@@ -30,7 +30,7 @@ type TextareaFieldProps = TextareaProps & {
  *   rows={5}
  *   errors={state?.error?.fields?.description}
  * />
- * 
+ *
  * // 制御コンポーネントとして使用
  * <TextareaField
  *   id="notes"
