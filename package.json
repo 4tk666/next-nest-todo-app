@@ -4,6 +4,7 @@
   "private": true,
   "packageManager": "pnpm@9.7.0",
   "scripts": {
+    "build": "pnpm --filter frontend build && pnpm --filter backend build",
     "dev:frontend": "pnpm --filter frontend dev",
     "dev:backend": "pnpm --filter backend start:dev",
     "format": "biome format --write .",
@@ -11,6 +12,7 @@
     "lint:fix": "biome lint --write .",
     "check": "biome check .",
     "check:fix": "biome check --write .",
+    "type-check": "pnpm --filter frontend type-check && pnpm --filter backend type-check",
     "test": "pnpm --filter frontend test && pnpm --filter backend test"
   },
   "dependencies": {
