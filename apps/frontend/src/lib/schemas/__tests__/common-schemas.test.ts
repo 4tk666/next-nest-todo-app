@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import {
-  requiredStringSchema,
-  emailSchema,
-  passwordSchema,
-  nameSchema,
-  createPasswordConfirmationRefine,
-} from '../common-schemas'
 import z from 'zod'
+import {
+  createPasswordConfirmationRefine,
+  emailSchema,
+  nameSchema,
+  passwordSchema,
+  requiredStringSchema,
+} from '../common-schemas'
 
 describe('common-schemas', () => {
   describe('requiredStringSchema', () => {

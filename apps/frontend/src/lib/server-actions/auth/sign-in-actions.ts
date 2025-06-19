@@ -1,8 +1,8 @@
 'use server'
 
-import { signIn } from '../../../auth'
 import { AuthError } from 'next-auth'
 import { redirect } from 'next/navigation'
+import { signIn } from '../../../auth'
 import type { ActionState } from '../../../types/form'
 import {
   type SignInFormValues,

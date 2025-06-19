@@ -1,8 +1,8 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { FormError } from '../../elements/form-error'
 import { OAUTH_ERRORS } from '../../../constants/oauth-errors'
+import { FormError } from '../../elements/form-error'
 
 /**
  * GitHub認証エラー表示コンポーネント

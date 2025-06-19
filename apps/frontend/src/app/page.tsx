@@ -11,7 +11,7 @@ export default async function Home() {
 
         {session?.user ? (
           <div>
-            <div className="mt-6"></div>
+            <div className="mt-6" />
           </div>
         ) : (
           <div>

@@ -1,8 +1,8 @@
 'use client'
 
 import * as Tabs from '@radix-ui/react-tabs'
-import { cn } from '../../lib/utils/class-utils'
 import type { ReactNode } from 'react'
+import { cn } from '../../lib/utils/class-utils'
 
 type TabItem = {
   value: string

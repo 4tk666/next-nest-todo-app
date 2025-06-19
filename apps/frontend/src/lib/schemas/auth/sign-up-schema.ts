@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { emailSchema, nameSchema, passwordSchema, createPasswordConfirmationRefine } from '../common-schemas'
+import {
+  createPasswordConfirmationRefine,
+  emailSchema,
+  nameSchema,
+  passwordSchema,
+} from '../common-schemas'
 
 const baseSignUpSchema = z.object({
   name: nameSchema,

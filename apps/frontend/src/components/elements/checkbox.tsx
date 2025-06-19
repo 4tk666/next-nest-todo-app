@@ -1,6 +1,6 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { FaCheck } from 'react-icons/fa'
 import { clsx } from 'clsx'
+import { FaCheck } from 'react-icons/fa'
 import { cn } from '../../lib/utils/class-utils'
 
 type CheckboxProps = {

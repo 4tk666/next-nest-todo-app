@@ -1,21 +1,21 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
-import { describe, test, expect, vi } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import { TabsComponent } from '../tabs'
 
 // テスト用のラッパーコンポーネント
-function TestTabsWrapper({ 
-  items, 
+function TestTabsWrapper({
+  items,
   initialValue = 'tab1',
   onValueChange,
-}: { 
+}: {
   items: Parameters<typeof TabsComponent>[0]['items']
   initialValue?: string
   onValueChange?: (value: string) => void
 }) {
   const [value, setValue] = useState(initialValue)
-  
+
   const handleValueChange = (newValue: string) => {
     setValue(newValue)
     onValueChange?.(newValue)
@@ -107,11 +107,11 @@ describe('TabsComponent', () => {
     const user = userEvent.setup()
     const mockOnValueChange = vi.fn()
     render(
-      <TestTabsWrapper 
-        items={mockItems} 
+      <TestTabsWrapper
+        items={mockItems}
         initialValue="tab1"
         onValueChange={mockOnValueChange}
-      />
+      />,
     )
 
     await user.click(screen.getByRole('tab', { name: 'タブ2' }))
@@ -121,13 +121,9 @@ describe('TabsComponent', () => {
   test('空の配列でnullが返される', () => {
     const mockOnValueChange = vi.fn()
     const { container } = render(
-      <TabsComponent 
-        items={[]} 
-        value="tab1" 
-        onValueChange={mockOnValueChange}
-      >
+      <TabsComponent items={[]} value="tab1" onValueChange={mockOnValueChange}>
         <div>コンテンツ</div>
-      </TabsComponent>
+      </TabsComponent>,
     )
     expect(container.firstChild).toBeNull()
   })
@@ -143,7 +139,7 @@ describe('TabsComponent', () => {
         listClassName="custom-list-class"
       >
         <div>コンテンツ</div>
-      </TabsComponent>
+      </TabsComponent>,
     )
 
     const tabList = screen.getByRole('tablist')
@@ -155,12 +151,12 @@ describe('TabsComponent', () => {
 
     // tablistの存在確認
     expect(screen.getByRole('tablist')).toBeInTheDocument()
-    
+
     // 各タブの存在確認
     const tab1 = screen.getByRole('tab', { name: 'タブ1' })
     const tab2 = screen.getByRole('tab', { name: 'タブ2' })
     const tab3 = screen.getByRole('tab', { name: 'タブ3' })
-    
+
     expect(tab1).toBeInTheDocument()
     expect(tab2).toBeInTheDocument()
     expect(tab3).toBeInTheDocument()
@@ -174,14 +170,14 @@ describe('TabsComponent', () => {
     render(<TestTabsWrapper items={mockItems} initialValue="tab1" />)
 
     const tab1 = screen.getByRole('tab', { name: 'タブ1' })
-    
+
     // 最初のタブにフォーカス
     tab1.focus()
     expect(tab1).toHaveFocus()
 
     // 矢印キーでナビゲーション
     await user.keyboard('{ArrowRight}')
-    
+
     const tab2 = screen.getByRole('tab', { name: 'タブ2' })
     expect(tab2).toHaveFocus()
   })

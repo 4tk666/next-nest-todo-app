@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
 import { GitHubSignInButton } from '../../../components/features/auth/github-sign-in-button'
-import { signInGithubAction } from '../../../lib/server-actions/auth/sign-in-actions'
 import { GitHubSignInError } from '../../../components/features/auth/github-sign-in-error'
 import { SignInForm } from '../../../components/features/auth/sign-in-form'
+import { signInGithubAction } from '../../../lib/server-actions/auth/sign-in-actions'
 
 export default function SignInPage() {
   return (

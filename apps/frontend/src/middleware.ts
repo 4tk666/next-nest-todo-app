@@ -1,7 +1,7 @@
-import { auth } from './auth'
-import { DEFAULT_LOGIN_REDIRECT } from './constants/routes'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { auth } from './auth'
+import { DEFAULT_LOGIN_REDIRECT } from './constants/routes'
 
 // 認証なしでもアクセス可能なパス
 const publicPaths = ['/', '/sign-in', '/sign-up']

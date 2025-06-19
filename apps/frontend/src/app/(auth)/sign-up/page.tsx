@@ -1,14 +1,14 @@
 'use client'
 
-import { Button } from '../../../components/elements/button'
-import { InputField } from '../../../components/elements/fields/input-field'
-import type { ActionState } from '../../../types/form'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useActionState } from 'react'
-import { signUpAction } from '../../../lib/server-actions/auth/sign-up-actions'
+import { Button } from '../../../components/elements/button'
 import { ErrorBanner } from '../../../components/elements/error-banner'
+import { InputField } from '../../../components/elements/fields/input-field'
 import type { SignUpFormValues } from '../../../lib/schemas/auth/sign-up-schema'
+import { signUpAction } from '../../../lib/server-actions/auth/sign-up-actions'
+import type { ActionState } from '../../../types/form'
 
 export default function SignUpPage() {
   const router = useRouter()

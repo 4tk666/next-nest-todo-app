@@ -175,7 +175,9 @@ describe('LinkButton コンポーネント', () => {
         </LinkButton>,
       )
 
-      const primaryLink = screen.getByRole('link', { name: 'フォーカステスト' })
+      const primaryLink = screen.getByRole('link', {
+        name: 'フォーカステスト',
+      })
       expect(primaryLink).toHaveClass(
         'focus-visible:outline-2',
         'focus-visible:outline-offset-2',
@@ -188,7 +190,9 @@ describe('LinkButton コンポーネント', () => {
         </LinkButton>,
       )
 
-      const outlineLink = screen.getByRole('link', { name: 'フォーカステスト' })
+      const outlineLink = screen.getByRole('link', {
+        name: 'フォーカステスト',
+      })
       expect(outlineLink).toHaveClass(
         'focus-visible:outline-2',
         'focus-visible:outline-offset-2',
