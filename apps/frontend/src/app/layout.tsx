@@ -16,13 +16,11 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-          <div className="flex flex-col h-screen">
-            <Header />
-            <main className="flex-1 p-4 sm:p-6 lg:p-8 mt-[64px]">
-              {children}
-            </main>
-          </div>
-          <Toaster />
+        <div className="flex flex-col h-screen">
+          <Header />
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 mt-[64px]">{children}</main>
+        </div>
+        <Toaster />
       </body>
     </html>
   )
