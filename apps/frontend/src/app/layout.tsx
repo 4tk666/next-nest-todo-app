@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { AuthProvider } from '../components/layouts/auth-provider'
 import { Header } from '../components/layouts/header'
 import { Toaster } from '../components/ui/sonner'
 
@@ -17,8 +16,6 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        {/* AuthProvider はセッション（ログイン状態）をコンポーネントに共有するために必要 */}
-        <AuthProvider>
           <div className="flex flex-col h-screen">
             <Header />
             <main className="flex-1 p-4 sm:p-6 lg:p-8 mt-[64px]">
@@ -26,7 +23,6 @@ export default function RootLayout({
             </main>
           </div>
           <Toaster />
-        </AuthProvider>
       </body>
     </html>
   )
