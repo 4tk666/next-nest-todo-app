@@ -13,32 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ユーザーモデル（例）
+// ユーザーモデル（認証対応）
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
+  password  String   // ハッシュ化されたパスワード
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // リレーション
-  tasks Task[]
-
   @@map("users")
-}
-
-// タスクモデル（例）
-model Task {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  completed   Boolean  @default(false)
-  userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // リレーション
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("tasks")
 }
