@@ -30,8 +30,8 @@ jobs:
         # - CI環境での一貫性を完全保証
         run: pnpm install --frozen-lockfile 
 
-      - name: Run Biome check
-        run: pnpm check
+      - name: Run Biome lint
+        run: pnpm lint
 
       - name: Run TypeScript type check
         run: pnpm type-check
