@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcryptjs'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { CreateUserDto } from './dto/create-user.dto'
-import { SignInUserDto } from './dto/sigin-in-user.dto'
+import { SignInUserDto } from './dto/sign-in-user.dto'
 
 @Injectable()
 export class AuthService {
@@ -35,13 +35,13 @@ export class AuthService {
     })
 
     if (!user) {
-      throw new Error('ユーザーが見つかりません')
+      throw new NotFoundException('ユーザーが見つかりません')
     }
 
     // パスワードの照合
     const isPasswordValid = await bcrypt.compare(password, user.password)
     if (!isPasswordValid) {
-      throw new Error('パスワードが正しくありません')
+      throw new UnauthorizedException('パスワードが正しくありません')
     }
 
     const jwtPayload = {
