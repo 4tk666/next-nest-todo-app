@@ -9,8 +9,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ユーザーモデル（認証対応）
@@ -18,7 +19,7 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
-  password  String   // ハッシュ化されたパスワード
+  password  String // ハッシュ化されたパスワード
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
