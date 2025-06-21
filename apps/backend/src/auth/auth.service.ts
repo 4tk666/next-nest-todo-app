@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import * as bcrypt from 'bcryptjs'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { CreateUserDto } from './dto/create-user.dto'
 
@@ -8,12 +9,14 @@ export class AuthService {
 
   async createUser(createUserDto: CreateUserDto) {
     const { name, email, password } = createUserDto
+
+    const hashedPassword = await bcrypt.hash(password, 10)
     // ユーザーをデータベースに作成するロジック
     return this.prismaService.user.create({
       data: {
         name,
         email,
-        password, // パスワードはハッシュ化して保存することを推奨
+        password: hashedPassword,
       },
     })
   }
