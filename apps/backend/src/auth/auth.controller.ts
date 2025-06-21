@@ -10,4 +10,9 @@ export class AuthController {
   async signUp(@Body() createUserDto: CreateUserDto) {
     return this.authService.createUser(createUserDto)
   }
+
+  @Post('signin')
+  async signIn(@Body() signInDto: CreateUserDto) {
+    return this.authService.signIn(signInDto)
+  }
 }
