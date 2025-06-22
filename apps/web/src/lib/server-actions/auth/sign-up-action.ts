@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import type { ActionState } from '../../../types/form'
 import {
   type SignUpFormValues,
@@ -38,7 +39,7 @@ export async function signUpAction(
     const validatedData = parseResult.data
 
     // バックエンドAPIを呼び出し
-    const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:3001'
+    const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:4000'
     const response = await fetch(`${apiBaseUrl}/auth/signup`, {
       method: 'POST',
       headers: {
@@ -72,11 +73,6 @@ export async function signUpAction(
         values: rawData,
       }
     }
-
-    // 成功時の処理
-    return {
-      success: true,
-    }
   } catch (error) {
     console.error('Sign up action error:', error)
     return {
@@ -93,4 +89,6 @@ export async function signUpAction(
       },
     }
   }
+
+  redirect('/sign-in?success=true')
 }
