@@ -1,0 +1,17 @@
+{
+  "node": {
+    "40f88759e788707a20fc5cdcfc4828d900d2158f5f": {
+      "workers": {
+        "app/(auth)/sign-in/page": {
+          "moduleId": "(action-browser)/../../node_modules/.pnpm/next@15.3.2_@babel+core@7.27.4_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fguitouzhixi%2Fai-job-interview%2Fapps%2Ffrontend%2Fsrc%2Flib%2Fserver-actions%2Fauth%2Fsign-in-actions.ts%22%2C%5B%7B%22id%22%3A%2240f88759e788707a20fc5cdcfc4828d900d2158f5f%22%2C%22exportedName%22%3A%22signInAction%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/(auth)/sign-in/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "0p2+lPd0bpPvFFQQfqo1iaweslf6cql5OSqhpbweQAo="
+}
