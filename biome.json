@@ -12,7 +12,7 @@
       "**/dist/**",
       "**/coverage/**",
       "**/build/**",
-      "apps/frontend/.next/**"
+      "apps/web/.next/**"
     ]
   },
   "formatter": {
@@ -37,7 +37,7 @@
   },
   "overrides": [
     {
-      "include": ["apps/backend/**/*.ts"],
+      "include": ["apps/api/**/*.ts"],
       "linter": {
         "rules": {
           "style": {
