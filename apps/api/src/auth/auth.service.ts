@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcryptjs'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -14,6 +18,16 @@ export class AuthService {
 
   async createUser(createUserDto: CreateUserDto) {
     const { name, email, password } = createUserDto
+
+    // メールアドレスの重複チェック
+    const existingUser = await this.prismaService.user.findUnique({
+      where: { email },
+    })
+    if (existingUser) {
+      throw new UnauthorizedException(
+        'このメールアドレスはすでに使用されています',
+      )
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10)
     // ユーザーをデータベースに作成するロジック
