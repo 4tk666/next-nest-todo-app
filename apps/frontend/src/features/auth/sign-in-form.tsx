@@ -32,12 +32,12 @@ export function SignInForm() {
       <form className="mt-6 space-y-6" action={action}>
         <div className="space-y-4">
           <InputField
-            id="username"
+            id="email"
             label="メールアドレス"
             type="email"
             placeholder="メールアドレスを入力"
-            defaultValue={state?.values?.username}
-            errors={state?.error?.fields?.username}
+            defaultValue={state?.values?.email}
+            errors={state?.error?.fields?.email}
           />
           <InputField
             id="password"

@@ -17,7 +17,7 @@ export async function signInAction(
 ): Promise<ActionState<void, SignInFormValues>> {
   // FormDataから値を取得
   const rawData = {
-    username: formData.get('username')?.toString() || '',
+    email: formData.get('email')?.toString() || '',
     password: formData.get('password')?.toString() || '',
   }
 
@@ -42,7 +42,7 @@ export async function signInAction(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: validationResult.data.username,
+        email: validationResult.data.email,
         password: validationResult.data.password,
       }),
     })
