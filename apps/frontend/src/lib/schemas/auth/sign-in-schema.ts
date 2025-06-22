@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { emailSchema, passwordSchema } from '../common-schemas'
 
 export const signInSchema = z.object({
-  username: emailSchema,
+  email: emailSchema,
   password: passwordSchema,
 })
 
