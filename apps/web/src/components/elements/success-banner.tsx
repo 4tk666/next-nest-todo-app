@@ -13,11 +13,16 @@ type SuccessBannerProps = {
  * 成功メッセージを表示するバナーコンポーネント
  * サインアップ完了やその他の成功状態の表示に使用します
  */
-export function SuccessBanner({ title, message, className }: SuccessBannerProps) {
+export function SuccessBanner({
+  title,
+  message,
+  className,
+}: SuccessBannerProps) {
   return (
-    <div
+    <output
       className={cn(
-        'mt-4 p-3',
+        'block',
+        'p-3',
         'text-sm',
         'bg-green-100 border border-green-400',
         'text-green-700 rounded',
@@ -27,6 +32,6 @@ export function SuccessBanner({ title, message, className }: SuccessBannerProps)
     >
       {title && <p className="font-semibold">{title}</p>}
       <p>{message}</p>
-    </div>
+    </output>
   )
 }
