@@ -9,7 +9,7 @@ async function handleSignOut() {
   const token = cookieStore.get(AUTH_TOKEN_KEY)
   if (!token) return
 
-  cookieStore.set(AUTH_TOKEN_KEY, '', { maxAge: 0, path: '/' })
+  cookieStore.delete(AUTH_TOKEN_KEY)
   redirect('/sign-in')
 }
 
