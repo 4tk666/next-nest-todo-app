@@ -1,8 +1,8 @@
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-// import { AllExceptionsFilter } from './filters/all-exceptions.filter'
 import { ResponseTransformInterceptor } from './interceptors/response-transform.interceptor'
+import { AllExceptionsFilter } from './filters/all-exceptions.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -25,7 +25,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseTransformInterceptor())
 
   // グローバル例外フィルターの設定
-  // app.useGlobalFilters(new AllExceptionsFilter())
+  app.useGlobalFilters(new AllExceptionsFilter())
 
   await app.listen(process.env.PORT ?? 4000)
 }
