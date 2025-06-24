@@ -15,8 +15,8 @@ type TemplateResponse = z.infer<typeof templateResponseSchema>
 function validateTemplateResponse(response: unknown): TemplateResponse {
   const result = templateResponseSchema.safeParse(response)
   if (!result.success) {
-    console.error('Invalid response format:', result.error)
-    throw new Error('Invalid response format')
+    console.error('レスポンス形式が正しくありません:', result.error)
+    throw new Error('レスポンス形式が正しくありません')
   }
   return result.data
 }
@@ -27,17 +27,19 @@ export async function extractJsonResponse(response: Response) {
     const validatedBody = validateTemplateResponse(body)
 
     if (!response.ok) {
-      const errorCode = validatedBody.error?.code ?? 'Unknown error'
-      throw new Error(errorCode)
+      const errorCode = validatedBody.error?.code ?? '不明なエラー'
+      const errorMessages =
+        validatedBody.error?.messages?.join('、') ?? '詳細情報はありません'
+      throw new Error(`${errorCode}: ${errorMessages}`)
     }
 
     return { response, body: validatedBody }
   } catch (error) {
     if (error instanceof Error) {
-      console.error('Failed to parse JSON response:', error.message)
-      throw new Error(`Failed to parse JSON response: ${error.message}`)
+      console.error('JSONレスポンスの解析に失敗しました:', error.message)
+      throw new Error(`JSONレスポンスの解析に失敗しました: ${error.message}`)
     }
-    throw new Error('Failed to parse JSON response: Unknown error')
+    throw new Error('JSONレスポンスの解析に失敗しました: 不明なエラー')
   }
 }
 
@@ -76,8 +78,8 @@ export async function writeFetch<Input, Output>({
   if (validateOutput) {
     const validationResult = validateOutput.safeParse(body.data)
     if (!validationResult.success) {
-      console.error('Output validation failed:', validationResult.error)
-      throw new Error('Output validation failed')
+      console.error('出力データの検証に失敗しました:', validationResult.error)
+      throw new Error('出力データの検証に失敗しました')
     }
     return validationResult.data
   }
