@@ -22,25 +22,17 @@ function validateTemplateResponse(response: unknown): TemplateResponse {
 }
 
 export async function extractJsonResponse(response: Response) {
-  try {
-    const body = await response.json()
-    const validatedBody = validateTemplateResponse(body)
+  const body = await response.json()
+  const validatedBody = validateTemplateResponse(body)
 
-    if (!response.ok) {
-      const errorCode = validatedBody.error?.code ?? '不明なエラー'
-      const errorMessages =
-        validatedBody.error?.messages?.join('、') ?? '詳細情報はありません'
-      throw new Error(`${errorCode}: ${errorMessages}`)
-    }
-
-    return { response, body: validatedBody }
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error('JSONレスポンスの解析に失敗しました:', error.message)
-      throw new Error(`JSONレスポンスの解析に失敗しました: ${error.message}`)
-    }
-    throw new Error('JSONレスポンスの解析に失敗しました: 不明なエラー')
+  if (!response.ok) {
+    const errorMessages =
+      validatedBody.error?.messages?.join('、') ?? '詳細情報はありません'
+    console.error(`APIエラー: ${errorMessages}`)
+    throw new Error(`${errorMessages}`)
   }
+
+  return { response, body: validatedBody }
 }
 
 type WriteFetchProps<Input, Output> = {
