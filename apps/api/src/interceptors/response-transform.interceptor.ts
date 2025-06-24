@@ -6,7 +6,16 @@ import {
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import type { TemplateResponse } from '../../../web/src/lib/utils/fetch-utils'
+
+type TemplateResponse = {
+  data?: unknown
+  error?:
+    | {
+        code: string
+        messages?: string[] | undefined
+      }
+    | undefined
+}
 
 /**
  * レスポンスを統一フォーマットに変換するインターセプター
