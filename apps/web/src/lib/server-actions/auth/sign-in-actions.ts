@@ -4,9 +4,11 @@ import {
   type SignInFormValues,
   signInSchema,
 } from '@/lib/schemas/auth/sign-in-schema'
+import { writeFetch } from '@/lib/utils/fetch-utils'
 import type { ActionState } from '@/types/form'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { z } from 'zod'
 
 /**
  * サインインのサーバーアクション
@@ -36,34 +38,21 @@ export async function signInAction(
 
   try {
     // バックエンドAPIを呼び出し（サーバーサイド用環境変数を使用）
-    const response = await fetch(`${process.env.API_URL}/auth/signin`, {
+    const response = await writeFetch<SignInFormValues, { token: string }>({
+      path: '/auth/signin',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+      inputBody: {
         email: validationResult.data.email,
         password: validationResult.data.password,
+      },
+      validateOutput: z.object({
+        token: z.string(),
       }),
     })
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => null)
-
-      return {
-        success: false,
-        error: {
-          message: errorData?.message || 'サインインに失敗しました',
-        },
-        values: rawData,
-      }
-    }
-
-    const data = await response.json()
-
     // JWTトークンをクッキーに設定（HttpOnly、Secure）
     const cookieStore = await cookies()
-    cookieStore.set('auth-token', data.token, {
+    cookieStore.set('auth-token', response.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
@@ -71,12 +60,22 @@ export async function signInAction(
       path: '/',
     })
   } catch (error) {
-    console.error('Sign in error:', error)
+    if (error instanceof Error) {
+      return {
+        success: false,
+        error: {
+          message: error.message,
+        },
+        values: rawData,
+      }
+    }
+
+    // 予期しないエラーの場合
     return {
       success: false,
       error: {
         message:
-          'サインインに失敗しました。ネットワーク接続を確認してください。',
+          '予期しないエラーが発生しました。しばらく時間をおいて再度お試しください。',
       },
       values: rawData,
     }

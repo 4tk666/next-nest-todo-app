@@ -10,7 +10,7 @@ const templateResponseSchema = z.object({
     .optional(),
 })
 
-type TemplateResponse = z.infer<typeof templateResponseSchema>
+export type TemplateResponse = z.infer<typeof templateResponseSchema>
 
 function validateTemplateResponse(response: unknown): TemplateResponse {
   const result = templateResponseSchema.safeParse(response)
