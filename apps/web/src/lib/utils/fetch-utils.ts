@@ -1,16 +1,8 @@
-import z from 'zod'
-
-const templateResponseSchema = z.object({
-  data: z.unknown(),
-  error: z
-    .object({
-      code: z.string(),
-      messages: z.array(z.string()).optional(),
-    })
-    .optional(),
-})
-
-export type TemplateResponse = z.infer<typeof templateResponseSchema>
+import {
+  type TemplateResponse,
+  templateResponseSchema,
+} from '@ai-job-interview/packages/schemas/common/template-response'
+import type { z } from 'zod'
 
 function validateTemplateResponse(response: unknown): TemplateResponse {
   const result = templateResponseSchema.safeParse(response)

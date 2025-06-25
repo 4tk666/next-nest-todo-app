@@ -14,9 +14,7 @@
     "type-check": "turbo run type-check",
     "test": "turbo run test"
   },
-  "dependencies": {
-    "zod": "^3.25.23"
-  },
+
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "turbo": "^2.5.4"
