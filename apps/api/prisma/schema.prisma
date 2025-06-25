@@ -23,6 +23,31 @@ model User {
   createdAt DateTime @default(now()) @db.Timestamp(0) // 作成日時
   updatedAt DateTime @updatedAt @db.Timestamp(0) // 更新日時
 
+  // リレーション
+  documents UserDocument[] // ユーザーが持つドキュメント
+
   // 実際のデータベーステーブル名を指定
   @@map("users")
+}
+
+// ドキュメントタイプのEnum定義
+enum DocumentType {
+  RESUME       @map("resume") // 履歴書
+  WORK_HISTORY @map("work_history") // 職務経歴書
+}
+
+model UserDocument {
+  id           Int          @id @default(autoincrement()) // ドキュメントID
+  userId       String       @map("user_id") @db.Uuid // ユーザーID（users.idへの外部キー）
+  documentType DocumentType @map("document_type") // ドキュメントタイプ（resume または work_history）
+  fileName     String       @map("file_name") @db.VarChar(255) // アップロードされたファイル名
+  fileData     Bytes        @map("file_data") // PDF本体（バイナリ）
+  uploadedAt   DateTime     @default(now()) @map("uploaded_at") @db.Timestamp(0) // アップロード日時
+
+  // userとのリレーション
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  // 実際のデータベーステーブル名を指定
+  @@map("user_documents")
 }
