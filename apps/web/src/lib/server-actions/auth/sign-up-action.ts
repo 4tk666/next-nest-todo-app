@@ -1,3 +1,5 @@
+'use server'
+
 import { writeFetch } from '@/lib/utils/fetch-utils'
 import { redirect } from 'next/navigation'
 import type { ActionState } from '../../../types/form'
