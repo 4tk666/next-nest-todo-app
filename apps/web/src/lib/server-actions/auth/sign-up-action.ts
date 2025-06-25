@@ -1,3 +1,4 @@
+import { writeFetch } from '@/lib/utils/fetch-utils'
 import { redirect } from 'next/navigation'
 import type { ActionState } from '../../../types/form'
 import {
@@ -38,41 +39,19 @@ export async function signUpAction(
 
     const validatedData = parseResult.data
 
-    // バックエンドAPIを呼び出し
-    const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:4000'
-    const response = await fetch(`${apiBaseUrl}/auth/signup`, {
+    // バックエンドAPIを呼び出し（サーバーサイド用環境変数を使用）
+    await writeFetch<
+      Omit<SignUpFormValues, 'confirmPassword'>,
+      { token: string }
+    >({
+      path: '/auth/signup',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+      inputBody: {
         name: validatedData.name,
         email: validatedData.email,
         password: validatedData.password,
-      }),
+      },
     })
-
-    if (!response.ok) {
-      // エラーレスポンスの処理
-      let errorMessage = 'ユーザー登録に失敗しました'
-
-      try {
-        const errorData = await response.json()
-        if (errorData.message) {
-          errorMessage = errorData.message
-        }
-      } catch {
-        // JSONパースエラーの場合はデフォルトメッセージを使用
-      }
-
-      return {
-        success: false,
-        error: {
-          message: errorMessage,
-        },
-        values: rawData,
-      }
-    }
   } catch (error) {
     console.error('Sign up action error:', error)
     return {
