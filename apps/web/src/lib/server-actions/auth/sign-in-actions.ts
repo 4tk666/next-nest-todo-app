@@ -60,7 +60,9 @@ export async function signInAction(
       path: '/',
     })
   } catch (error) {
+    console.error('Sign up action error:', error)
     if (error instanceof Error) {
+      console.error('Sign up action error2:', error)
       return {
         success: false,
         error: {
