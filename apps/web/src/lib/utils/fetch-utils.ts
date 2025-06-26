@@ -34,7 +34,7 @@ type WriteFetchProps<Input, Output> = {
   validateOutput?: z.Schema<Output>
 }
 
-function buildApiUrl(path: string): string {
+export function buildApiUrl(path: string): string {
   const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:4000'
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
   return new URL(normalizedPath, apiBaseUrl).toString()
