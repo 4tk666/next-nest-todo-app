@@ -23,7 +23,12 @@ export async function Header() {
           <div className="flex items-center">
             <div className="flex space-x-4">
               {token ? (
-                <SignOutButton />
+                <>
+                  <LinkButton href="/profile" variant="outline">
+                    プロフィール
+                  </LinkButton>
+                  <SignOutButton />
+                </>
               ) : (
                 <>
                   <LinkButton href="/sign-in" variant="outline">
