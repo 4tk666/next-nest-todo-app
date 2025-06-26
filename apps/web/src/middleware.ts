@@ -16,7 +16,7 @@ const isExcludedPath = (path: string) => path.includes('.')
 // ミドルウェア関数
 export async function middleware(request: NextRequest) {
   const cookieStore = await cookies()
-  const token = cookieStore.get(AUTH_TOKEN_KEY)
+  const token = cookieStore.get(AUTH_TOKEN_KEY)?.value
 
   const path = request.nextUrl.pathname
 
