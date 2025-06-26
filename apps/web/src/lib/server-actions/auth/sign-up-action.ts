@@ -1,6 +1,6 @@
 'use server'
 
-import { writeFetch } from '@/lib/utils/fetch-utils'
+import { publicFetch } from '@/lib/utils/fetch/public-fetch'
 import { redirect } from 'next/navigation'
 import type { ActionState } from '../../../types/form'
 import {
@@ -42,7 +42,7 @@ export async function signUpAction(
     const validatedData = parseResult.data
 
     // バックエンドAPIを呼び出し（サーバーサイド用環境変数を使用）
-    await writeFetch<
+    await publicFetch<
       Omit<SignUpFormValues, 'confirmPassword'>,
       { token: string }
     >({
