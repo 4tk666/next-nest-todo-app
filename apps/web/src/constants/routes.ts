@@ -4,4 +4,4 @@
  */
 
 // ログイン後のデフォルトリダイレクト先
-export const DEFAULT_LOGIN_REDIRECT = '/'
+export const DEFAULT_LOGIN_REDIRECT = '/profile'
