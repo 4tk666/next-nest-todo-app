@@ -1,12 +1,11 @@
-
-import { DEFAULT_LOGIN_REDIRECT } from '@/constants/routes'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { AUTH_TOKEN_KEY } from './constants/auth-token-key'
+import { ROUTES } from './constants/routes'
 
 // 認証なしでもアクセス可能なパス
-const publicPaths = ['/sign-in', '/sign-up']
+const publicPaths: string[] = [ROUTES.SIGN_IN, ROUTES.SIGN_UP]
 
 const isPublicPath = (path: string) => publicPaths.includes(path)
 
@@ -22,8 +21,8 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
   // 認証済みでログインページにアクセスした場合はリダイレクト
-  if (!!token && (path === '/sign-in' || path === '/sign-up')) {
-    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, request.url))
+  if (!!token && (path === ROUTES.SIGN_IN || path === ROUTES.SIGN_UP)) {
+    return NextResponse.redirect(new URL(ROUTES.PROFILE, request.url))
   }
   // 認証不要パスの場合はそのまま続行
   if (isExcludedPath(path) || isPublicPath(path)) {
@@ -32,7 +31,7 @@ export async function middleware(request: NextRequest) {
 
   // 認証されていない場合はログインにリダイレクト
   if (!token) {
-    return NextResponse.redirect(new URL('/sign-in', request.url))
+    return NextResponse.redirect(new URL(ROUTES.SIGN_IN, request.url))
   }
 
   // それ以外の場合は続行
