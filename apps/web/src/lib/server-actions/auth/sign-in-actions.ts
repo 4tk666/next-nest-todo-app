@@ -4,7 +4,7 @@ import {
   type SignInFormValues,
   signInSchema,
 } from '@/lib/schemas/auth/sign-in-schema'
-import { writeFetch } from '@/lib/utils/fetch-utils'
+import { publicFetch } from '@/lib/utils/fetch/public-fetch'
 import type { ActionState } from '@/types/form'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -38,7 +38,7 @@ export async function signInAction(
 
   try {
     // バックエンドAPIを呼び出し（サーバーサイド用環境変数を使用）
-    const response = await writeFetch<SignInFormValues, { token: string }>({
+    const response = await publicFetch<SignInFormValues, { token: string }>({
       path: '/auth/signin',
       method: 'POST',
       inputBody: {

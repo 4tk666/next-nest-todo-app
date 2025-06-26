@@ -1,5 +1,3 @@
-'use server'
-
 import { AUTH_TOKEN_KEY } from '@/constants/auth-token-key'
 import { cookies } from 'next/headers'
 import type { z } from 'zod'
@@ -20,11 +18,11 @@ type AuthenticatedFetchProps<Output> = {
 async function getAuthToken(): Promise<string> {
   const cookieStore = await cookies()
   const token = cookieStore.get(AUTH_TOKEN_KEY)
-  
+
   if (!token?.value) {
     throw new Error('認証トークンが見つかりません')
   }
-  
+
   return token.value
 }
 
@@ -43,7 +41,7 @@ export async function authenticatedFetch<Output>({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       mode: 'cors',
     })

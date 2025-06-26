@@ -1,6 +1,6 @@
 'use server'
 
-import { authenticatedFetch } from '@/lib/utils/auth-fetch-utils'
+import { authenticatedFetch } from '@/lib/utils/fetch/auth-fetch'
 import {
   type UserProfile,
   userProfileSchema,
