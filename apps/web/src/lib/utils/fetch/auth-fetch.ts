@@ -1,38 +1,22 @@
-import { AUTH_TOKEN_KEY } from '@/constants/auth-token-key'
-import { cookies } from 'next/headers'
 import type { z } from 'zod'
-import { buildApiUrl, extractJsonResponse } from './fetch-utils'
+import { buildApiUrl, extractJsonResponse, getAuthToken } from './fetch-utils'
 
 /**
  * 認証が必要なAPIエンドポイントへのGETリクエスト用ユーティリティ
  * JWTトークンをAuthorizationヘッダーに含めてリクエストを送信します
  */
-type AuthenticatedFetchProps<Output> = {
+type AuthenticatedReadFetchProps<Output> = {
   path: string
-  validateOutput?: z.Schema<Output>
-}
-
-/**
- * 認証トークンを取得する
- */
-async function getAuthToken(): Promise<string> {
-  const cookieStore = await cookies()
-  const token = cookieStore.get(AUTH_TOKEN_KEY)
-
-  if (!token?.value) {
-    throw new Error('認証トークンが見つかりません')
-  }
-
-  return token.value
+  validateOutput: z.Schema<Output>
 }
 
 /**
  * 認証が必要なGETリクエストを送信する
  */
-export async function authenticatedFetch<Output>({
+export async function authenticatedReadFetch<Output>({
   path,
   validateOutput,
-}: AuthenticatedFetchProps<Output>): Promise<Output> {
+}: AuthenticatedReadFetchProps<Output>): Promise<Output> {
   const apiUrl = buildApiUrl(path)
   const token = await getAuthToken()
 
