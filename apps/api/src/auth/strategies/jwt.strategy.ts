@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       // JWTの抽出方法を指定
       // ここではAuthorizationヘッダーからBearerトークンを抽出
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      // 期限切れトークンは検証しない
+      // 期限切れトークンを拒否する
       ignoreExpiration: false,
       secretOrKey: jwtSecret,
     })
