@@ -82,5 +82,5 @@ export async function signInAction(
   }
 
   // 成功時はホームページにリダイレクト
-  redirect('/')
+  redirect('/profile')
 }
