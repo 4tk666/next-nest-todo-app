@@ -30,6 +30,10 @@ jobs:
         # - CI環境での一貫性を完全保証
         run: pnpm install --frozen-lockfile 
 
+      - name: Generate Prisma client
+        # CI環境でPrismaクライアントコードを生成
+        run: pnpm --filter api... db:generate
+
       - name: Run Biome lint
         run: pnpm lint
 
