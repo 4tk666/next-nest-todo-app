@@ -1,7 +1,9 @@
 import z from 'zod'
 
 export const templateResponseSchema = z.object({
-  data: z.unknown(),
+  data: z.unknown().refine(val => val !== undefined, {
+    message: "dataフィールドは必須です"
+  }),
   error: z
     .object({
       code: z.string(),

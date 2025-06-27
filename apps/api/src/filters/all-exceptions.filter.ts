@@ -68,7 +68,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const messages: string[] = normalizeErrorMessages(rawErrorResponse)
 
     const formattedResponse: TemplateResponse = {
-      data: undefined,
+      data: null,
       error: {
         code: String(status),
         messages,
