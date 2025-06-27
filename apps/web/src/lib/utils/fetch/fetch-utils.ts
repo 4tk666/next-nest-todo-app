@@ -11,7 +11,7 @@ export function buildApiUrl(path: string): string {
   return new URL(normalizedPath, apiBaseUrl).toString()
 }
 
-function validateTemplateResponse(response: unknown): TemplateResponse {
+export function validateTemplateResponse(response: unknown): TemplateResponse {
   const result = templateResponseSchema.safeParse(response)
   if (!result.success) {
     console.error('レスポンス形式が正しくありません:', result.error)
@@ -26,7 +26,7 @@ export async function extractJsonResponse(response: Response) {
 
   if (!response.ok) {
     const errorMessages =
-      validatedBody.error?.messages?.join('、') ?? '詳細情報はありません'
+      validatedBody.error?.messages?.join('、') ?? '不明なエラーが発生しました'
     console.error(`APIエラー: ${errorMessages}`)
     throw new Error(`${errorMessages}`)
   }
