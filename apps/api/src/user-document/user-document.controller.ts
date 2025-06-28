@@ -1,40 +1,34 @@
 import {
-  Controller,
-  Post,
   Body,
-  UseInterceptors,
-  UploadedFile,
-  UseGuards,
-  Request,
-  ParseFilePipe,
+  Controller,
   FileTypeValidator,
   MaxFileSizeValidator,
+  ParseFilePipe,
+  Post,
+  Request,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { AuthenticatedRequest } from 'src/auth/strategies/jwt.strategy'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
-import { UserDocumentService } from './user-document.service'
 import { ResponseTransformInterceptor } from '../interceptors/response-transform.interceptor'
-import { uploadDocumentSchema, type UploadDocumentDto } from './dto/upload-document.dto'
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
+import {
+  type UploadDocumentDto,
+  uploadDocumentSchema,
+} from './dto/upload-document.dto'
+import { UserDocumentService } from './user-document.service'
 
 /**
  * アップロードされるファイルの型定義
  */
-interface MultipartFile {
+type MultipartFile = {
   originalname: string
   buffer: Buffer
   mimetype: string
   size: number
-}
-
-/**
- * JWTから取得するユーザー情報の型定義
- */
-interface AuthenticatedRequest extends Request {
-  user: {
-    id: string
-    email: string
-  }
 }
 
 /**
@@ -68,12 +62,11 @@ export class UserDocumentController {
     file: MultipartFile,
     @Body(new ZodValidationPipe(uploadDocumentSchema)) body: UploadDocumentDto,
   ) {
-    const userId = request.user.id
-    const uploadData = { ...body, fileName: file.originalname }
+    const userId = request.user.sub
 
     return await this.userDocumentService.uploadDocument(
       userId,
-      uploadData,
+      body,
       file.buffer,
     )
   }

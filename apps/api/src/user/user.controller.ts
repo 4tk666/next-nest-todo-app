@@ -1,13 +1,7 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
 import { UserService } from './user.service'
-
-// 認証済みリクエストの型定義
-type AuthenticatedRequest = {
-  user: {
-    sub: string
-  }
-}
+import { AuthenticatedRequest } from 'src/auth/strategies/jwt.strategy'
 
 @Controller('user')
 @UseGuards(JwtAuthGuard)

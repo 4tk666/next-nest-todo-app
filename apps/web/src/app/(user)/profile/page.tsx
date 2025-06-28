@@ -63,6 +63,11 @@ export default async function ProfilePage() {
             <p className="text-gray-900">{profile.updatedAt}</p>
           </div>
         </div>
+
+        {/* ドキュメントアップロードセクション */}
+        <div className="mt-8">
+          {/* <DocumentUploadSection /> */}
+        </div>
       </div>
     </div>
   )
