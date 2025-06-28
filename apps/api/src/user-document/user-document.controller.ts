@@ -11,6 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { AuthenticatedRequest } from 'src/auth/strategies/jwt.strategy'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { ResponseTransformInterceptor } from '../interceptors/response-transform.interceptor'
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
@@ -19,7 +20,6 @@ import {
   uploadDocumentSchema,
 } from './dto/upload-document.dto'
 import { UserDocumentService } from './user-document.service'
-import { AuthenticatedRequest } from 'src/auth/strategies/jwt.strategy'
 
 /**
  * アップロードされるファイルの型定義
@@ -30,7 +30,6 @@ type MultipartFile = {
   mimetype: string
   size: number
 }
-
 
 /**
  * ユーザードキュメントアップロード関連のAPIエンドポイントを提供するコントローラー
@@ -64,11 +63,10 @@ export class UserDocumentController {
     @Body(new ZodValidationPipe(uploadDocumentSchema)) body: UploadDocumentDto,
   ) {
     const userId = request.user.sub
-    const uploadData = { ...body }
 
     return await this.userDocumentService.uploadDocument(
       userId,
-      uploadData,
+      body,
       file.buffer,
     )
   }
