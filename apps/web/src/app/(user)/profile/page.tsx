@@ -1,5 +1,6 @@
 import { AUTH_TOKEN_KEY } from '@/constants/auth-token-key'
 import { getUserProfileAction } from '@/lib/server-actions/user/get-user-profile-action'
+import { DocumentUploadSection } from '@/components/user/document-upload-section'
 import { clsx } from 'clsx'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -62,6 +63,11 @@ export default async function ProfilePage() {
             </h3>
             <p className="text-gray-900">{profile.updatedAt}</p>
           </div>
+        </div>
+
+        {/* ドキュメントアップロードセクション */}
+        <div className="mt-8">
+          <DocumentUploadSection />
         </div>
       </div>
     </div>

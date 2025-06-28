@@ -6,6 +6,10 @@ type JwtPayload = {
   sub: string
 }
 
+export type AuthenticatedRequest = {
+  user: JwtPayload
+}
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
