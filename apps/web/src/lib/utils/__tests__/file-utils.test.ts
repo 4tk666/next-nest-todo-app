@@ -39,11 +39,11 @@ describe('formatFileSize', () => {
   })
 
   it('マイナス値や無効な値を適切に処理する', () => {
-    expect(formatFileSize(-1024)).toBeUndefined
-    expect(formatFileSize(-1)).toBe
-    expect(formatFileSize(Number.NaN)).toBeUndefined
-    expect(formatFileSize(Number.POSITIVE_INFINITY)).toBeUndefined
-    expect(formatFileSize(Number.NEGATIVE_INFINITY)).toBeUndefined
+    expect(formatFileSize(-1024)).toBeUndefined()
+    expect(formatFileSize(-1)).toBeUndefined()
+    expect(formatFileSize(Number.NaN)).toBeUndefined()
+    expect(formatFileSize(Number.POSITIVE_INFINITY)).toBeUndefined()
+    expect(formatFileSize(Number.NEGATIVE_INFINITY)).toBeUndefined()
   })
 })
 
