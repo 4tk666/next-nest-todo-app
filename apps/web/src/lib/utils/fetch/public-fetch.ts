@@ -31,7 +31,7 @@ export async function publicFetch<Input, Output>({
     if (validateOutput) {
       const validationResult = validateOutput.safeParse(body.data)
       if (!validationResult.success) {
-        console.error('出力データの検証に失敗しました:', validationResult.error)
+        console.error('出力データの検証に失敗しました:', validationResult.error, body.data)
         throw new Error('出力データの検証に失敗しました')
       }
       return validationResult.data
