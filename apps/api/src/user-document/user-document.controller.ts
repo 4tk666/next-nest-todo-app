@@ -36,7 +36,6 @@ type MultipartFile = {
  */
 @Controller('user-documents')
 @UseGuards(JwtAuthGuard)
-@UseInterceptors(ResponseTransformInterceptor)
 export class UserDocumentController {
   constructor(private readonly userDocumentService: UserDocumentService) {}
 

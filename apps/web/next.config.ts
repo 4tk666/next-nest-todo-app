@@ -1,7 +1,11 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb', // Server Actionsのボディサイズ制限を10MBに設定
+    },
+  },
 }
 
 export default nextConfig

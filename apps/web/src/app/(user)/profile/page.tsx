@@ -1,3 +1,4 @@
+import { DocumentUploadSection } from '@/components/user/document-upload-section'
 import { AUTH_TOKEN_KEY } from '@/constants/auth-token-key'
 import { getUserProfileAction } from '@/lib/server-actions/user/get-user-profile-action'
 import { clsx } from 'clsx'
@@ -66,7 +67,7 @@ export default async function ProfilePage() {
 
         {/* ドキュメントアップロードセクション */}
         <div className="mt-8">
-          {/* <DocumentUploadSection /> */}
+          <DocumentUploadSection />
         </div>
       </div>
     </div>
