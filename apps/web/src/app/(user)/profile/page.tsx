@@ -1,5 +1,5 @@
-import { DocumentUploadSection } from '@/components/user/document-upload-section'
 import { AUTH_TOKEN_KEY } from '@/constants/auth-token-key'
+import { DocumentUploadSection } from '@/features/user/document-upload-section'
 import { getUserProfileAction } from '@/lib/server-actions/user/get-user-profile-action'
 import { clsx } from 'clsx'
 import { cookies } from 'next/headers'

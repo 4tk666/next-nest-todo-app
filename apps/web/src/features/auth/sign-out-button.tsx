@@ -1,4 +1,4 @@
-import { Button } from '@/components/elements/button'
+import { Button } from '@/components/ui/button'
 import { AUTH_TOKEN_KEY } from '@/constants/auth-token-key'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'

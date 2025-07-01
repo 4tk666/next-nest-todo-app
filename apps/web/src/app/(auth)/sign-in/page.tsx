@@ -1,4 +1,4 @@
-import { SuccessBanner } from '@/components/elements/success-banner'
+import { SuccessBanner } from '@/components/ui/success-banner'
 import { SignInForm } from '@/features/auth/sign-in-form'
 import clsx from 'clsx'
 
