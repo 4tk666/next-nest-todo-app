@@ -2,12 +2,12 @@
 
 import { Button } from '@/components/ui/button'
 import { FileUpload } from '@/components/ui/file-upload'
-import { uploadDocumentActionState } from '@/lib/server-actions/user/upload-document-action'
 import type { ActionState } from '@/types/form'
 import type { DocumentResponse } from '@ai-job-interview/packages/schemas/user/document'
 import { clsx } from 'clsx'
 import { useActionState, useState } from 'react'
 import { toast } from 'sonner'
+import { uploadDocumentActionState } from '../server-actions/upload-document-action'
 
 /**
  * ドキュメントアップロード用のコンポーネント
