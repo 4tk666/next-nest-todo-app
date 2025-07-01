@@ -1,4 +1,4 @@
-import { LinkButton } from '../components/elements/link-button'
+import { LinkButton } from '../components/ui/link-button'
 
 export default async function Home() {
   return (

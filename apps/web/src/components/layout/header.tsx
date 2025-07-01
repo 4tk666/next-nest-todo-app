@@ -3,7 +3,7 @@ import { SignOutButton } from '@/features/auth/sign-out-button'
 import { clsx } from 'clsx'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import { LinkButton } from '../elements/link-button'
+import { LinkButton } from '../ui/link-button'
 
 export async function Header() {
   const cookieStore = await cookies()

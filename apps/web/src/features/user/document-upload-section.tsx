@@ -1,15 +1,13 @@
 'use client'
 
-import { FileUpload } from '@/components/elements/file-upload'
+import { Button } from '@/components/ui/button'
+import { FileUpload } from '@/components/ui/file-upload'
 import { uploadDocumentActionState } from '@/lib/server-actions/user/upload-document-action'
 import type { ActionState } from '@/types/form'
-import type {
-  DocumentResponse,
-} from '@ai-job-interview/packages/schemas/user/document'
+import type { DocumentResponse } from '@ai-job-interview/packages/schemas/user/document'
 import { clsx } from 'clsx'
 import { useActionState, useState } from 'react'
 import { toast } from 'sonner'
-import { Button } from '../elements/button'
 
 /**
  * ドキュメントアップロード用のコンポーネント
@@ -18,10 +16,7 @@ export function DocumentUploadSection() {
   const [uploadDocument, setUploadDocument] = useState<File>()
   const [uploadErrors, setUploadErrors] = useState<string[]>([])
   const [state, formAction, isPending] = useActionState(
-    async (
-      _p: ActionState<DocumentResponse> | undefined,
-      _f: unknown,
-    ) => {
+    async (_p: ActionState<DocumentResponse> | undefined, _f: unknown) => {
       if (!uploadDocument) return
 
       const result = await uploadDocumentActionState(uploadDocument, 'RESUME')

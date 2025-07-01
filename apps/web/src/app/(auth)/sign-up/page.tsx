@@ -2,11 +2,11 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useActionState} from 'react'
-import { Button } from '../../../components/elements/button'
-import { InputField } from '../../../components/elements/fields/input-field'
+import { useActionState } from 'react'
+import { Button } from '../../../components/ui/button'
+import { ErrorBanner } from '../../../components/ui/error-banner'
+import { InputField } from '../../../components/ui/fields/input-field'
 import { signUpAction } from '../../../lib/server-actions/auth/sign-up-action'
-import { ErrorBanner } from '../../../components/elements/error-banner'
 
 export default function SignUpPage() {
   const router = useRouter()
