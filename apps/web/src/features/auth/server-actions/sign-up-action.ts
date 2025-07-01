@@ -1,12 +1,12 @@
 'use server'
 
-import { publicFetch } from '@/lib/utils/fetch/public-fetch'
-import { redirect } from 'next/navigation'
-import type { ActionState } from '../../../types/form'
 import {
   type SignUpFormValues,
   signUpSchema,
-} from '../../schemas/auth/sign-up-schema'
+} from '@/lib/schemas/auth/sign-up-schema'
+import { publicFetch } from '@/lib/utils/fetch/public-fetch'
+import { redirect } from 'next/navigation'
+import type { ActionState } from '../../../types/form'
 
 /**
  * ユーザー登録サーバーアクション

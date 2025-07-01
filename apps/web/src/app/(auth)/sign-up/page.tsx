@@ -6,7 +6,7 @@ import { useActionState } from 'react'
 import { Button } from '../../../components/ui/button'
 import { ErrorBanner } from '../../../components/ui/error-banner'
 import { InputField } from '../../../components/ui/fields/input-field'
-import { signUpAction } from '../../../lib/server-actions/auth/sign-up-action'
+import { signUpAction } from '@/features/auth/server-actions/sign-up-action'
 
 export default function SignUpPage() {
   const router = useRouter()
