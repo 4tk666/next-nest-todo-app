@@ -3,8 +3,14 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
-import { PrismaService } from '../prisma/prisma.service'
+
+
+
+
+
+
 import type { UploadDocumentDto } from './dto/upload-document.dto'
+import { PrismaService } from 'src/database/prisma/prisma.service'
 
 /**
  * ドキュメントレスポンス用の型定義

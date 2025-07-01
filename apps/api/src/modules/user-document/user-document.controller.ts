@@ -11,10 +11,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { AuthenticatedRequest } from 'src/auth/strategies/jwt.strategy'
+import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
+import { AuthenticatedRequest } from 'src/modules/auth/strategies/jwt.strategy'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
-import { ResponseTransformInterceptor } from '../interceptors/response-transform.interceptor'
-import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
 import {
   type UploadDocumentDto,
   uploadDocumentSchema,
