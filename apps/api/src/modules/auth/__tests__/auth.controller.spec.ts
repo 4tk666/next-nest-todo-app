@@ -3,8 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { AuthController } from '../auth.controller'
 import { AuthService } from '../auth.service'
-import { CreateUserDto } from '../dto/create-user.dto'
 import { SignInUserDto } from '../dto/sign-in-user.dto'
+import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
 
 describe('AuthController', () => {
   let controller: AuthController
@@ -37,7 +37,7 @@ describe('AuthController', () => {
   })
 
   describe('signUp', () => {
-    const validCreateUserDto: CreateUserDto = {
+    const validCreateUserInput: CreateUserInput = {
       name: 'テストユーザー',
       email: 'test@example.com',
       password: 'Password123',
@@ -56,11 +56,11 @@ describe('AuthController', () => {
       mockAuthService.createUser.mockResolvedValue(expectedUserResponse)
 
       // Act（実行）
-      const result = await controller.signUp(validCreateUserDto)
+      const result = await controller.signUp(validCreateUserInput)
 
       // Assert（検証）
       // コントローラーが正しくサービス層に DTO（ユーザー登録情報）を渡しているかを検証
-      expect(authService.createUser).toHaveBeenCalledWith(validCreateUserDto)
+      expect(authService.createUser).toHaveBeenCalledWith(validCreateUserInput)
       // サービス層のメソッドが1回だけ呼び出されていることを検証
       expect(authService.createUser).toHaveBeenCalledTimes(1)
       // コントローラーのレスポンスが期待通りのユーザー情報であることを検証
@@ -73,7 +73,7 @@ describe('AuthController', () => {
         new UnauthorizedException(errorMessage),
       )
 
-      await expect(controller.signUp(validCreateUserDto)).rejects.toThrow(
+      await expect(controller.signUp(validCreateUserInput)).rejects.toThrow(
         UnauthorizedException,
       )
     })
@@ -84,7 +84,7 @@ describe('AuthController', () => {
         new UnauthorizedException(errorMessage),
       )
 
-      await expect(controller.signUp(validCreateUserDto)).rejects.toThrow(
+      await expect(controller.signUp(validCreateUserInput)).rejects.toThrow(
         errorMessage,
       )
     })

@@ -16,10 +16,14 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@ai-job-interview/packages/*": ["../../packages/*"]
+    }
   },
   "include": [
-    "src/**/*" // srcディレクトリ内のすべてのファイルを対象
+    "src/**/*", // srcディレクトリ内のすべてのファイルを対象
+    "../../packages/**/*.ts"
   ],
   "exclude": [
     "node_modules",
