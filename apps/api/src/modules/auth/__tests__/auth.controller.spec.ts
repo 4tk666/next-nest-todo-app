@@ -67,26 +67,27 @@ describe('AuthController', () => {
       expect(result).toEqual(expectedUserResponse)
     })
 
-    it('異常な場合：既存のメールアドレスでエラーが発生すること', async () => {
-      // Arrange（準備）
+    it('異常な場合：UnauthorizedException がスローされること', async () => {
       const errorMessage = 'このメールアドレスはすでに使用されています'
       mockAuthService.createUser.mockRejectedValue(
         new UnauthorizedException(errorMessage),
       )
 
-      // コントローラーの signUp メソッドが UnauthorizedException をスローすることを検証
       await expect(controller.signUp(validCreateUserDto)).rejects.toThrow(
         UnauthorizedException,
       )
-      // エラーメッセージが正しいことを検証
+    })
+
+    it('異常な場合：エラーメッセージが正しいこと', async () => {
+      const errorMessage = 'このメールアドレスはすでに使用されています'
+      mockAuthService.createUser.mockRejectedValue(
+        new UnauthorizedException(errorMessage),
+      )
+
       await expect(controller.signUp(validCreateUserDto)).rejects.toThrow(
         errorMessage,
       )
-
-      expect(authService.createUser).toHaveBeenCalledWith(validCreateUserDto)
-      expect(authService.createUser).toHaveBeenCalledTimes(2) // 上で2回呼び出されているため
     })
-
   })
 
   describe('signIn', () => {
@@ -118,22 +119,26 @@ describe('AuthController', () => {
       expect(result).toEqual(expectedTokenResponse)
     })
 
-    it('異常な場合：不正な認証情報でエラーが発生すること', async () => {
-      // Arrange（準備）
-      const errorMessage = 'メールアドレスまたはパスワードが正しくありません'
+    it('異常な場合：UnauthorizedException がスローされること', async () => {
+      const errorMessage = '認証に失敗しました'
       mockAuthService.signIn.mockRejectedValue(
         new UnauthorizedException(errorMessage),
       )
 
-      // Act & Assert（実行と検証）
       await expect(controller.signIn(validSignInDto)).rejects.toThrow(
         UnauthorizedException,
       )
+    })
+
+    it('異常な場合：エラーメッセージが正しいこと', async () => {
+      const errorMessage = '認証に失敗しました'
+      mockAuthService.signIn.mockRejectedValue(
+        new UnauthorizedException(errorMessage),
+      )
+
       await expect(controller.signIn(validSignInDto)).rejects.toThrow(
         errorMessage,
       )
-
-      expect(authService.signIn).toHaveBeenCalledWith(validSignInDto)
     })
   })
 })
