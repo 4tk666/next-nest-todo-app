@@ -1,3 +1,5 @@
+import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
+import { SignInUserInput } from '@ai-job-interview/packages/schemas/user/sign-in-user.schema'
 import {
   Injectable,
   NotFoundException,
@@ -6,8 +8,6 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcryptjs'
 import { PrismaService } from 'src/database/prisma/prisma.service'
-import { SignInUserDto } from './dto/sign-in-user.dto'
-import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
 
 @Injectable()
 export class AuthService {
@@ -47,7 +47,7 @@ export class AuthService {
     })
   }
 
-  async signIn(signInDto: SignInUserDto) {
+  async signIn(signInDto: SignInUserInput) {
     const { email, password } = signInDto
 
     // ユーザーをデータベースから取得

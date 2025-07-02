@@ -1,7 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common'
 import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
+import { SignInUserInput } from '@ai-job-interview/packages/schemas/user/sign-in-user.schema'
+import { Body, Controller, Post } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { SignInUserDto } from './dto/sign-in-user.dto'
 
 @Controller('auth')
 export class AuthController {
@@ -13,7 +13,7 @@ export class AuthController {
   }
 
   @Post('signin')
-  async signIn(@Body() signInDto: SignInUserDto) {
+  async signIn(@Body() signInDto: SignInUserInput) {
     return this.authService.signIn(signInDto)
   }
 }

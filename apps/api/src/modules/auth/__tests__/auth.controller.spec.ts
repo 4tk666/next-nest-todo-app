@@ -1,10 +1,10 @@
+import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
+import { SignInUserInput } from '@ai-job-interview/packages/schemas/user/sign-in-user.schema'
 import { UnauthorizedException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { AuthController } from '../auth.controller'
 import { AuthService } from '../auth.service'
-import { SignInUserDto } from '../dto/sign-in-user.dto'
-import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
 
 describe('AuthController', () => {
   let controller: AuthController
@@ -91,7 +91,7 @@ describe('AuthController', () => {
   })
 
   describe('signIn', () => {
-    const validSignInDto: SignInUserDto = {
+    const validSignInDto: SignInUserInput = {
       email: 'test@example.com',
       password: 'Password123',
     }
