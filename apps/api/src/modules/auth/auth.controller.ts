@@ -1,19 +1,31 @@
+import {
+  CreateUserInput,
+  createUserSchema,
+} from '@ai-job-interview/packages/schemas/user/create-user-schema'
+import {
+  SignInUserInput,
+  signInUserSchema,
+} from '@ai-job-interview/packages/schemas/user/sign-in-user.schema'
 import { Body, Controller, Post } from '@nestjs/common'
-import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
+import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
 import { AuthService } from './auth.service'
-import { SignInUserDto } from './dto/sign-in-user.dto'
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  async signUp(@Body() createUserDto: CreateUserInput) {
-    return this.authService.createUser(createUserDto)
+  async signUp(
+    @Body(new ZodValidationPipe(createUserSchema))
+    createUserInput: CreateUserInput,
+  ) {
+    return this.authService.createUser(createUserInput)
   }
 
   @Post('signin')
-  async signIn(@Body() signInDto: SignInUserDto) {
-    return this.authService.signIn(signInDto)
+  async signIn(
+    @Body(new ZodValidationPipe(signInUserSchema)) signInInput: SignInUserInput,
+  ) {
+    return this.authService.signIn(signInInput)
   }
 }

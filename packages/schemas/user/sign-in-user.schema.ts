@@ -19,4 +19,4 @@ export const signInUserSchema = z.object({
 /**
  * loginUserSchemaから推論されるTypeScript型
  */
-export type SignInUserDto = z.infer<typeof signInUserSchema>
+export type SignInUserInput = z.infer<typeof signInUserSchema>
