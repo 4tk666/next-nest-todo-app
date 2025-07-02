@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common'
+import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
 import { AuthService } from './auth.service'
-import { CreateUserDto } from './dto/create-user.dto'
 import { SignInUserDto } from './dto/sign-in-user.dto'
 
 @Controller('auth')
@@ -8,7 +8,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  async signUp(@Body() createUserDto: CreateUserDto) {
+  async signUp(@Body() createUserDto: CreateUserInput) {
     return this.authService.createUser(createUserDto)
   }
 

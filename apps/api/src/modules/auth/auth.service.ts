@@ -6,8 +6,8 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcryptjs'
 import { PrismaService } from 'src/database/prisma/prisma.service'
-import { CreateUserDto } from './dto/create-user.dto'
 import { SignInUserDto } from './dto/sign-in-user.dto'
+import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
 
 @Injectable()
 export class AuthService {
@@ -16,7 +16,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserInput) {
     const { name, email, password } = createUserDto
 
     // メールアドレスの重複チェック

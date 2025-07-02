@@ -19,10 +19,10 @@ export const createUserSchema = z.object({
       'パスワードは英大文字、英小文字、数字をそれぞれ1文字以上含む必要があります',
     ),
 
-  name: z.string().max(255, '名前は255文字以内で入力してください').optional(),
+  name: z.string().max(255, '名前は255文字以内で入力してください'),
 })
 
 /**
  * createUserSchemaから推論されるTypeScript型
  */
-export type CreateUserDto = z.infer<typeof createUserSchema>
+export type CreateUserInput = z.infer<typeof createUserSchema>
