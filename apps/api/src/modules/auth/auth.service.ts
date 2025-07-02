@@ -16,8 +16,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createUser(createUserDto: CreateUserInput) {
-    const { name, email, password } = createUserDto
+  async createUser(createUserInput: CreateUserInput) {
+    const { name, email, password } = createUserInput
 
     // メールアドレスの重複チェック
     const existingUser = await this.prismaService.user.findUnique({
@@ -47,8 +47,8 @@ export class AuthService {
     })
   }
 
-  async signIn(signInDto: SignInUserInput) {
-    const { email, password } = signInDto
+  async signIn(signInInput: SignInUserInput) {
+    const { email, password } = signInInput
 
     // ユーザーをデータベースから取得
     const user = await this.prismaService.user.findUnique({

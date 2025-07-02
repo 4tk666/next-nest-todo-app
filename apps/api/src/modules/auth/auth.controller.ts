@@ -17,15 +17,15 @@ export class AuthController {
   @Post('signup')
   async signUp(
     @Body(new ZodValidationPipe(createUserSchema))
-    createUserDto: CreateUserInput,
+    createUserInput: CreateUserInput,
   ) {
-    return this.authService.createUser(createUserDto)
+    return this.authService.createUser(createUserInput)
   }
 
   @Post('signin')
   async signIn(
-    @Body(new ZodValidationPipe(signInUserSchema)) signInDto: SignInUserInput,
+    @Body(new ZodValidationPipe(signInUserSchema)) signInInput: SignInUserInput,
   ) {
-    return this.authService.signIn(signInDto)
+    return this.authService.signIn(signInInput)
   }
 }
