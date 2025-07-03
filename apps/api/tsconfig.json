@@ -17,13 +17,9 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@ai-job-interview/packages/*": ["../../packages/*"]
-    }
   },
   "include": [
     "src/**/*", // srcディレクトリ内のすべてのファイルを対象
-    "../../packages/**/*.ts"
   ],
   "exclude": [
     "node_modules",
