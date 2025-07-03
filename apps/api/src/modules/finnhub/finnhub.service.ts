@@ -1,0 +1,100 @@
+import { Injectable, Logger } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { z } from 'zod'
+import {
+  type FinnhubSearchResponse,
+  type SearchStocksDto,
+  finnhubSearchResponseSchema,
+} from './dto/finnhub.dto'
+
+type FinnhubFetchParams<T> = {
+  endpoint: string
+  params: {
+    q?: string
+    symbol?: string
+    metric?: string
+  }
+  validateOutput: z.Schema<T>
+}
+
+@Injectable()
+export class FinnhubService {
+  private readonly logger = new Logger(FinnhubService.name)
+  private readonly baseUrl = 'https://finnhub.io/api/v1'
+  private readonly apiKey: string
+
+  constructor(private readonly configService: ConfigService) {
+    const apiKey = this.configService.get<string>('FINNHUB_API_KEY')
+
+    if (!apiKey) {
+      this.logger.error('FINNHUB_API_KEY環境変数が設定されていません')
+      throw new Error('FINNHUB_API_KEY環境変数が設定されていません')
+    }
+
+    this.apiKey = apiKey
+  }
+
+  private normalizeSymbol(symbol: string): string {
+    // 株式シンボルの正規化（例: $AAPL → AAPL）
+    return symbol.startsWith('$') ? symbol.slice(1) : symbol
+  }
+
+  /**
+   * Finnhub APIの汎用取得関数
+   */
+  private async finnhubFetch<T>({
+    endpoint,
+    params,
+    validateOutput,
+  }: FinnhubFetchParams<T>): Promise<T> {
+    // クエリ文字列の構築
+    const searchParams = new URLSearchParams({
+      ...(params.q ? { q: params.q } : {}),
+      ...(params.symbol ? { symbol: this.normalizeSymbol(params.symbol) } : {}),
+      ...(params.metric ? { metric: params.metric } : {}),
+      token: this.apiKey ?? '',
+    })
+
+    const url = `${this.baseUrl}/${endpoint}?${searchParams.toString()}`
+
+    try {
+      const response = await fetch(url)
+
+      if (!response.ok) {
+        throw new Error(
+          `Finnhub APIエラー: ${response.status} ${response.statusText}`,
+        )
+      }
+
+      const data = await response.json()
+
+      if (validateOutput) {
+        const validationResult = validateOutput.safeParse(data)
+        if (!validationResult.success) {
+          console.error(
+            'Finnhub API出力データの検証に失敗しました:',
+            validationResult.error,
+          )
+          throw new Error('Finnhub API出力データの検証に失敗しました')
+        }
+        return validationResult.data
+      }
+
+      return data as T
+    } catch (error) {
+      console.error('Finnhub APIリクエスト中にエラーが発生しました:', error)
+      throw error
+    }
+  }
+
+  /**
+   * 株式を検索する
+   */
+  async searchStocks(dto: SearchStocksDto): Promise<FinnhubSearchResponse> {
+    return this.finnhubFetch<FinnhubSearchResponse>({
+      endpoint: 'search',
+      params: { q: dto.q },
+      validateOutput: finnhubSearchResponseSchema,
+    })
+  }
+}
