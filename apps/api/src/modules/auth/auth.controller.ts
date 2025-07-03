@@ -1,14 +1,11 @@
-import {
-  CreateUserInput,
-  createUserSchema,
-} from '@ai-job-interview/packages/schemas/user/create-user-schema'
-import {
-  SignInUserInput,
-  signInUserSchema,
-} from '@ai-job-interview/packages/schemas/user/sign-in-user.schema'
 import { Body, Controller, Post } from '@nestjs/common'
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
 import { AuthService } from './auth.service'
+import { CreateUserInput, createUserSchema } from './schemas/create-user-schema'
+import {
+  SignInUserInput,
+  signInUserSchema,
+} from './schemas/sign-in-user.schema'
 
 @Controller('auth')
 export class AuthController {
