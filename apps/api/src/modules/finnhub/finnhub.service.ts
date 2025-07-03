@@ -20,18 +20,25 @@ type FinnhubFetchParams<T> = {
 @Injectable()
 export class FinnhubService {
   private readonly logger = new Logger(FinnhubService.name)
-  private readonly baseUrl = 'https://finnhub.io/api/v1'
+  private readonly baseUrl: string
   private readonly apiKey: string
 
   constructor(private readonly configService: ConfigService) {
     const apiKey = this.configService.get<string>('FINNHUB_API_KEY')
+    const apiUrl = this.configService.get<string>('FINNHUB_API_URL')
 
     if (!apiKey) {
       this.logger.error('FINNHUB_API_KEY環境変数が設定されていません')
       throw new Error('FINNHUB_API_KEY環境変数が設定されていません')
     }
 
+    if (!apiUrl) {
+      this.logger.error('FINNHUB_API_URL環境変数が設定されていません')
+      throw new Error('FINNHUB_API_URL環境変数が設定されていません')
+    }
+
     this.apiKey = apiKey
+    this.baseUrl = apiUrl
   }
 
   private normalizeSymbol(symbol: string): string {
@@ -71,7 +78,7 @@ export class FinnhubService {
       if (validateOutput) {
         const validationResult = validateOutput.safeParse(data)
         if (!validationResult.success) {
-          console.error(
+           this.logger.error(
             'Finnhub API出力データの検証に失敗しました:',
             validationResult.error,
           )
@@ -82,7 +89,7 @@ export class FinnhubService {
 
       return data as T
     } catch (error) {
-      console.error('Finnhub APIリクエスト中にエラーが発生しました:', error)
+      this.logger.error('Finnhub APIリクエスト中にエラーが発生しました:', error)
       throw error
     }
   }
