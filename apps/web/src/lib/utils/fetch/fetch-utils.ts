@@ -5,10 +5,33 @@ import {
 } from '@ai-job-interview/packages/schemas/common/template-response'
 import { cookies } from 'next/headers'
 
+/**
+ * URLにクエリパラメータを追加する関数
+ */
+export function addQueryParams(url: string, query: Record<string, string>): string {
+  const urlObject = new URL(url)
+
+  for (const [key, value] of Object.entries(query)) {
+    if (value !== '') {
+      urlObject.searchParams.append(key, value)
+    }
+  }
+
+  return urlObject.toString()
+}
+
 export function buildApiUrl(path: string): string {
   const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:4000'
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
   return new URL(normalizedPath, apiBaseUrl).toString()
+}
+
+export function buildApiUrlWithQuery({
+  path,
+  params = {},
+}: { path: string; params: Record<string, string> }): string {
+  const baseUrl = buildApiUrl(path)
+  return addQueryParams(baseUrl, params)
 }
 
 export function validateTemplateResponse(response: unknown): TemplateResponse {

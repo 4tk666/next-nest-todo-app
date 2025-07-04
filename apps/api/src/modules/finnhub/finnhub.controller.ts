@@ -1,11 +1,12 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common'
+import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import {
   FinnhubSearchResponse,
   type SearchStocksDto,
   searchStocksSchema,
 } from './dto/finnhub.dto'
 import { FinnhubService } from './finnhub.service'
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 
 @Controller('finnhub')
 @UseGuards(JwtAuthGuard)
@@ -18,11 +19,9 @@ export class FinnhubController {
    */
   @Get('search')
   async searchStocks(
-    @Query() query: SearchStocksDto,
+    @Query(new ZodValidationPipe(searchStocksSchema))
+    query: SearchStocksDto,
   ): Promise<FinnhubSearchResponse> {
-    // バリデーション
-    const validatedQuery = searchStocksSchema.parse(query)
-
-    return this.finnhubService.searchStocks(validatedQuery)
+    return this.finnhubService.searchStocks(query)
   }
 }

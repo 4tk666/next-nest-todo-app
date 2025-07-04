@@ -1,7 +1,9 @@
 import { cookies } from 'next/headers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
+  addQueryParams,
   buildApiUrl,
+  buildApiUrlWithQuery,
   extractJsonResponse,
   getAuthToken,
   validateTemplateResponse,
@@ -41,7 +43,7 @@ describe('fetch-utils', () => {
       // dataフィールドが存在しない場合、refineによりエラーになる
       const invalidData = { invalidField: 'test' }
       expect(() => validateTemplateResponse(invalidData)).toThrow(
-        'レスポンス形式が正しくありません'
+        'レスポンス形式が正しくありません',
       )
     })
 
@@ -160,7 +162,7 @@ describe('fetch-utils', () => {
 
       // validateTemplateResponseでエラーが投げられる
       await expect(extractJsonResponse(mockResponse)).rejects.toThrow(
-        'レスポンス形式が正しくありません'
+        'レスポンス形式が正しくありません',
       )
     })
 
@@ -244,6 +246,141 @@ describe('fetch-utils', () => {
       await expect(getAuthToken()).rejects.toThrow(
         '認証トークンが見つかりません',
       )
+    })
+  })
+
+  describe('addQueryParams', () => {
+    it('単一のクエリパラメータを正しく追加する', () => {
+      const url = 'https://api.example.com/search'
+      const query = { q: 'apple' }
+
+      const result = addQueryParams(url, query)
+
+      expect(result).toBe('https://api.example.com/search?q=apple')
+    })
+
+    it('複数のクエリパラメータを正しく追加する', () => {
+      const url = 'https://api.example.com/stocks'
+      const query = {
+        symbol: 'AAPL',
+        metric: 'price',
+        limit: '10',
+      }
+
+      const result = addQueryParams(url, query)
+
+      expect(result).toBe(
+        'https://api.example.com/stocks?symbol=AAPL&metric=price&limit=10',
+      )
+    })
+
+    it('空のクエリオブジェクトの場合、元のURLを返す', () => {
+      const url = 'https://api.example.com/data'
+      const query = {}
+
+      const result = addQueryParams(url, query)
+
+      expect(result).toBe('https://api.example.com/data')
+    })
+
+    it('既存のクエリパラメータがあるURLに追加する', () => {
+      const url = 'https://api.example.com/search?existing=value'
+      const query = { new: 'param' }
+
+      const result = addQueryParams(url, query)
+
+      expect(result).toBe(
+        'https://api.example.com/search?existing=value&new=param',
+      )
+    })
+
+    it('特殊文字を含むクエリパラメータを正しくエンコードする', () => {
+      const url = 'https://api.example.com/search'
+      const query = {
+        q: 'hello world',
+        special: 'test@example.com',
+      }
+
+      const result = addQueryParams(url, query)
+
+      expect(result).toBe(
+        'https://api.example.com/search?q=hello+world&special=test%40example.com',
+      )
+    })
+
+    it('日本語文字を含むクエリパラメータを正しくエンコードする', () => {
+      const url = 'https://api.example.com/search'
+      const query = {
+        q: '株式検索',
+        company: 'テスト会社',
+      }
+
+      const result = addQueryParams(url, query)
+
+      expect(result).toBe(
+        'https://api.example.com/search?q=%E6%A0%AA%E5%BC%8F%E6%A4%9C%E7%B4%A2&company=%E3%83%86%E3%82%B9%E3%83%88%E4%BC%9A%E7%A4%BE',
+      )
+    })
+  })
+
+  describe('buildApiUrlWithQuery', () => {
+    beforeEach(() => {
+      // 各テスト前に環境変数を設定
+      process.env.API_BASE_URL = 'http://localhost:4000'
+    })
+
+    it('パスとクエリパラメータを組み合わせてURLを構築する', () => {
+      const result = buildApiUrlWithQuery({
+        path: '/finnhub/search',
+        params: { q: 'AAPL' },
+      })
+
+      expect(result).toBe('http://localhost:4000/finnhub/search?q=AAPL')
+    })
+
+    it('複数のクエリパラメータを正しく処理する', () => {
+      const result = buildApiUrlWithQuery({
+        path: '/api/stocks',
+        params: {
+          symbol: 'AAPL',
+          metric: 'price',
+          limit: '10',
+        },
+      })
+
+      expect(result).toBe(
+        'http://localhost:4000/api/stocks?symbol=AAPL&metric=price&limit=10',
+      )
+    })
+
+    it('空のparamsオブジェクトの場合、クエリパラメータなしのURLを返す', () => {
+      const result = buildApiUrlWithQuery({
+        path: '/api/data',
+        params: {},
+      })
+
+      expect(result).toBe('http://localhost:4000/api/data')
+    })
+
+    it('パスがスラッシュで始まらない場合も正しく処理する', () => {
+      const result = buildApiUrlWithQuery({
+        path: 'search/stocks',
+        params: { q: 'microsoft' },
+      })
+
+      expect(result).toBe('http://localhost:4000/search/stocks?q=microsoft')
+    })
+
+    it('無効な値を持つパラメータを除外する', () => {
+      const result = buildApiUrlWithQuery({
+        path: '/filter',
+        params: {
+          valid: 'keep',
+          empty: '',
+        },
+      })
+
+      expect(result).toBe('http://localhost:4000/filter?valid=keep')
     })
   })
 })
