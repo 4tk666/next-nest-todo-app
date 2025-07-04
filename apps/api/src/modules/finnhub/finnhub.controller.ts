@@ -22,9 +22,6 @@ export class FinnhubController {
     @Query(new ZodValidationPipe(searchStocksSchema))
     query: SearchStocksDto,
   ): Promise<FinnhubSearchResponse> {
-    // バリデーション
-    const validatedQuery = searchStocksSchema.parse(query)
-
-    return this.finnhubService.searchStocks(validatedQuery)
+    return this.finnhubService.searchStocks(query)
   }
 }

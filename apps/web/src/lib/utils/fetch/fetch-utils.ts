@@ -12,7 +12,7 @@ export function addQueryParams(url: string, query: Record<string, string>): stri
   const urlObject = new URL(url)
 
   for (const [key, value] of Object.entries(query)) {
-    if (value !== undefined && value !== null && value !== '') {
+    if (value !== '') {
       urlObject.searchParams.append(key, value)
     }
   }
