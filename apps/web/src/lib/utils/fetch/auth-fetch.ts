@@ -1,5 +1,10 @@
 import type { z } from 'zod'
-import { buildApiUrl, extractJsonResponse, getAuthToken } from './fetch-utils'
+import {
+  buildApiUrl,
+  buildApiUrlWithQuery,
+  extractJsonResponse,
+  getAuthToken,
+} from './fetch-utils'
 
 /**
  * 認証が必要なAPIエンドポイントへのGETリクエスト用ユーティリティ
@@ -8,6 +13,7 @@ import { buildApiUrl, extractJsonResponse, getAuthToken } from './fetch-utils'
 type AuthenticatedReadFetchProps<Output> = {
   path: string
   validateOutput: z.Schema<Output>
+  params?: Record<string, string>
 }
 
 /**
@@ -27,8 +33,12 @@ type AuthenticatedFileUploadProps<Input, Output> = {
 export async function authenticatedReadFetch<Output>({
   path,
   validateOutput,
+  params = {},
 }: AuthenticatedReadFetchProps<Output>): Promise<Output> {
-  const apiUrl = buildApiUrl(path)
+  const apiUrl = buildApiUrlWithQuery({
+    path,
+    params,
+  })
   const token = await getAuthToken()
 
   try {
