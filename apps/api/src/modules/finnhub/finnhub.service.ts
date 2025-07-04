@@ -78,7 +78,7 @@ export class FinnhubService {
       if (validateOutput) {
         const validationResult = validateOutput.safeParse(data)
         if (!validationResult.success) {
-           this.logger.error(
+          this.logger.error(
             'Finnhub API出力データの検証に失敗しました:',
             validationResult.error,
           )
