@@ -35,7 +35,7 @@ export async function serverAuthenticatedReadFetch<Output>({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...(token ? { Cookie: `auth-toke=${token.value}` } : {}),
+        ...(token ? { Cookie: `auth-token=${token.value}` } : {}),
       },
     })
 

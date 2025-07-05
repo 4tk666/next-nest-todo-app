@@ -1,5 +1,3 @@
-import { AUTH_TOKEN_KEY } from '@/constants/auth-token-key'
-import { cookies } from 'next/headers'
 import type { z } from 'zod'
 import { buildApiUrlWithQuery, extractJsonResponse } from '../fetch-utils'
 
@@ -21,8 +19,6 @@ export async function clientAuthenticatedReadFetch<Output>({
   validateOutput,
   params = {},
 }: AuthenticatedReadFetchProps<Output>): Promise<Output> {
-  const cookieStore = await cookies()
-  const token = cookieStore.get(AUTH_TOKEN_KEY)
   const apiUrl = buildApiUrlWithQuery({
     path,
     params,
@@ -33,8 +29,9 @@ export async function clientAuthenticatedReadFetch<Output>({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...(token ? { Cookie: `auth-token=${token.value}` } : {}),
       },
+      mode: 'cors',
+      credentials: 'include', // Cookieを送信するために必要
     })
 
     const { body } = await extractJsonResponse(response)
