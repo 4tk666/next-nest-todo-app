@@ -1,8 +1,5 @@
 import type { z } from 'zod'
-import {
-  buildApiUrlWithQuery,
-  extractJsonResponse,
-} from './fetch-utils'
+import { buildApiUrlWithQuery, extractJsonResponse } from '../fetch-utils'
 
 /**
  * 認証が必要なAPIエンドポイントへのGETリクエスト用ユーティリティ
@@ -14,11 +11,10 @@ type AuthenticatedReadFetchProps<Output> = {
   params?: Record<string, string>
 }
 
-
 /**
  * 認証が必要なGETリクエストを送信する
  */
-export async function authenticatedReadFetch<Output>({
+export async function clientAuthenticatedReadFetch<Output>({
   path,
   validateOutput,
   params = {},

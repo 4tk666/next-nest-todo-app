@@ -1,6 +1,7 @@
 'use server'
 
-import { authenticatedReadFetch } from '@/lib/utils/fetch/auth-fetch'
+
+import { serverAuthenticatedReadFetch } from '@/lib/utils/fetch/server/server-auth-fetch'
 import {
   type UserProfile,
   userProfileSchema,
@@ -14,7 +15,7 @@ import {
  * @throws 認証エラーまたはユーザーが見つからない場合
  */
 export async function getUserProfileAction(): Promise<UserProfile> {
-  return authenticatedReadFetch<UserProfile>({
+  return serverAuthenticatedReadFetch<UserProfile>({
     path: '/user/profile',
     validateOutput: userProfileSchema,
   })
