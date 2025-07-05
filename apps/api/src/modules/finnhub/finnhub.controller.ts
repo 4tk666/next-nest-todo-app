@@ -1,6 +1,6 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common'
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
+import { JwtAuthGuard } from '../../common/jwt/guards/jwt-auth.guard'
 import {
   FinnhubSearchResponse,
   type SearchStocksDto,

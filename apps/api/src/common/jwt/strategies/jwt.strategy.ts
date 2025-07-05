@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
+import { Request } from 'express'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 
-type JwtPayload = {
+export type JwtPayload = {
   sub: string
 }
 
@@ -20,9 +21,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     super({
-      // JWTの抽出方法を指定
-      // ここではAuthorizationヘッダーからBearerトークンを抽出
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      // JWT（JSON Web Token）をリクエストからどのように抽出するかを定義するための設定
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request: Request) => {
+          return request?.cookies['auth-token'] ?? null
+        },
+      ]),
       // 期限切れトークンを拒否する
       ignoreExpiration: false,
       secretOrKey: jwtSecret,
