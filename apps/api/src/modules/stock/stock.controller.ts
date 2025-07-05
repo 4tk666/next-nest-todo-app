@@ -8,14 +8,14 @@ import {
 } from './dto/stock.dto'
 import { StockService } from './stock.service'
 
-@Controller('stock')
+@Controller('stocks')
 @UseGuards(JwtAuthGuard)
 export class StockController {
   constructor(private readonly stockService: StockService) {}
 
   /**
    * 株式を検索する
-   * GET /stock/search?q=apple
+   * GET /stocks/search?q=apple
    */
   @Get('search')
   async searchStocks(
