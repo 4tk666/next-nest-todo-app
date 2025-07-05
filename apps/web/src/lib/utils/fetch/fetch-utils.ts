@@ -1,9 +1,7 @@
-import { AUTH_TOKEN_KEY } from '@/constants/auth-token-key'
 import {
   type TemplateResponse,
   templateResponseSchema,
 } from '@ai-job-interview/packages/schemas/common/template-response'
-import { cookies } from 'next/headers'
 
 /**
  * URLにクエリパラメータを追加する関数
@@ -57,16 +55,3 @@ export async function extractJsonResponse(response: Response) {
   return { response, body: validatedBody }
 }
 
-/**
- * 認証トークンを取得する
- */
-export async function getAuthToken(): Promise<string> {
-  const cookieStore = await cookies()
-  const token = cookieStore.get(AUTH_TOKEN_KEY)
-
-  if (!token?.value) {
-    throw new Error('認証トークンが見つかりません')
-  }
-
-  return token.value
-}
