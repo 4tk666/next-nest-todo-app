@@ -5,7 +5,6 @@ import {
   buildApiUrl,
   buildApiUrlWithQuery,
   extractJsonResponse,
-  getAuthToken,
   validateTemplateResponse,
 } from '../fetch-utils'
 
@@ -175,76 +174,6 @@ describe('fetch-utils', () => {
 
       await expect(extractJsonResponse(mockResponse)).rejects.toThrow(
         'Invalid JSON',
-      )
-    })
-  })
-
-  describe('getAuthToken', () => {
-    it('有効なトークンが存在する場合、トークンを返す', async () => {
-      // cookiesモックの設定
-      const mockCookieStore = {
-        get: vi.fn().mockReturnValue({
-          value: 'valid-token-123',
-        }),
-      }
-
-      vi.mocked(cookies).mockResolvedValue(
-        mockCookieStore as unknown as Awaited<ReturnType<typeof cookies>>,
-      )
-
-      const result = await getAuthToken()
-
-      expect(result).toBe('valid-token-123')
-      expect(mockCookieStore.get).toHaveBeenCalledWith('auth-token')
-    })
-
-    it('トークンが存在しない場合、エラーを投げる', async () => {
-      // トークンが存在しない場合のモック
-      const mockCookieStore = {
-        get: vi.fn().mockReturnValue(undefined),
-      }
-
-      vi.mocked(cookies).mockResolvedValue(
-        mockCookieStore as unknown as Awaited<ReturnType<typeof cookies>>,
-      )
-
-      await expect(getAuthToken()).rejects.toThrow(
-        '認証トークンが見つかりません',
-      )
-    })
-
-    it('トークンの値が空の場合、エラーを投げる', async () => {
-      // トークンの値が空の場合のモック
-      const mockCookieStore = {
-        get: vi.fn().mockReturnValue({
-          value: '',
-        }),
-      }
-
-      vi.mocked(cookies).mockResolvedValue(
-        mockCookieStore as unknown as Awaited<ReturnType<typeof cookies>>,
-      )
-
-      await expect(getAuthToken()).rejects.toThrow(
-        '認証トークンが見つかりません',
-      )
-    })
-
-    it('クッキーオブジェクトにvalueプロパティがない場合、エラーを投げる', async () => {
-      // valueプロパティがないクッキーオブジェクトのモック
-      const mockCookieStore = {
-        get: vi.fn().mockReturnValue({
-          name: 'auth-token',
-          // valueプロパティなし
-        }),
-      }
-
-      vi.mocked(cookies).mockResolvedValue(
-        mockCookieStore as unknown as Awaited<ReturnType<typeof cookies>>,
-      )
-
-      await expect(getAuthToken()).rejects.toThrow(
-        '認証トークンが見つかりません',
       )
     })
   })
