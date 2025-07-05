@@ -2,26 +2,26 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common'
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
 import { JwtAuthGuard } from '../../common/jwt/guards/jwt-auth.guard'
 import {
-  FinnhubSearchResponse,
   type SearchStocksDto,
+  StockSearchResponse,
   searchStocksSchema,
-} from './dto/finnhub.dto'
-import { FinnhubService } from './finnhub.service'
+} from './dto/stock.dto'
+import { StockService } from './stock.service'
 
-@Controller('finnhub')
+@Controller('stock')
 @UseGuards(JwtAuthGuard)
-export class FinnhubController {
-  constructor(private readonly finnhubService: FinnhubService) {}
+export class StockController {
+  constructor(private readonly stockService: StockService) {}
 
   /**
    * 株式を検索する
-   * GET /finnhub/search?q=apple
+   * GET /stock/search?q=apple
    */
   @Get('search')
   async searchStocks(
     @Query(new ZodValidationPipe(searchStocksSchema))
     query: SearchStocksDto,
-  ): Promise<FinnhubSearchResponse> {
-    return this.finnhubService.searchStocks(query)
+  ): Promise<StockSearchResponse> {
+    return this.stockService.searchStocks(query)
   }
 }

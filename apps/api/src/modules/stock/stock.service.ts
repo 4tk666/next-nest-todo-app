@@ -2,12 +2,12 @@ import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { z } from 'zod'
 import {
-  type FinnhubSearchResponse,
   type SearchStocksDto,
-  finnhubSearchResponseSchema,
-} from './dto/finnhub.dto'
+  type StockSearchResponse,
+  stockSearchResponseSchema,
+} from './dto/stock.dto'
 
-type FinnhubFetchParams<T> = {
+type StockFetchParams<T> = {
   endpoint: string
   params: {
     q?: string
@@ -18,8 +18,8 @@ type FinnhubFetchParams<T> = {
 }
 
 @Injectable()
-export class FinnhubService {
-  private readonly logger = new Logger(FinnhubService.name)
+export class StockService {
+  private readonly logger = new Logger(StockService.name)
   private readonly baseUrl: string
   private readonly apiKey: string
 
@@ -47,13 +47,13 @@ export class FinnhubService {
   }
 
   /**
-   * Finnhub APIの汎用取得関数
+   * Stock APIの汎用取得関数
    */
-  private async finnhubFetch<T>({
+  private async stockFetch<T>({
     endpoint,
     params,
     validateOutput,
-  }: FinnhubFetchParams<T>): Promise<T> {
+  }: StockFetchParams<T>): Promise<T> {
     // クエリ文字列の構築
     const searchParams = new URLSearchParams({
       ...(params.q ? { q: params.q } : {}),
@@ -69,7 +69,7 @@ export class FinnhubService {
 
       if (!response.ok) {
         throw new Error(
-          `Finnhub APIエラー: ${response.status} ${response.statusText}`,
+          `Stock APIエラー: ${response.status} ${response.statusText}`,
         )
       }
 
@@ -79,17 +79,17 @@ export class FinnhubService {
         const validationResult = validateOutput.safeParse(data)
         if (!validationResult.success) {
           this.logger.error(
-            'Finnhub API出力データの検証に失敗しました:',
+            'Stock API出力データの検証に失敗しました:',
             validationResult.error,
           )
-          throw new Error('Finnhub API出力データの検証に失敗しました')
+          throw new Error('Stock API出力データの検証に失敗しました')
         }
         return validationResult.data
       }
 
       return data as T
     } catch (error) {
-      this.logger.error('Finnhub APIリクエスト中にエラーが発生しました:', error)
+      this.logger.error('Stock APIリクエスト中にエラーが発生しました:', error)
       throw error
     }
   }
@@ -97,11 +97,11 @@ export class FinnhubService {
   /**
    * 株式を検索する
    */
-  async searchStocks(dto: SearchStocksDto): Promise<FinnhubSearchResponse> {
-    return this.finnhubFetch<FinnhubSearchResponse>({
+  async searchStocks(dto: SearchStocksDto): Promise<StockSearchResponse> {
+    return this.stockFetch<StockSearchResponse>({
       endpoint: 'search',
       params: { q: dto.q },
-      validateOutput: finnhubSearchResponseSchema,
+      validateOutput: stockSearchResponseSchema,
     })
   }
 }
