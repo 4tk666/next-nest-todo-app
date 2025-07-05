@@ -260,11 +260,11 @@ describe('fetch-utils', () => {
 
     it('パスとクエリパラメータを組み合わせてURLを構築する', () => {
       const result = buildApiUrlWithQuery({
-        path: '/finnhub/search',
+        path: '/stock/search',
         params: { q: 'AAPL' },
       })
 
-      expect(result).toBe('http://localhost:4000/finnhub/search?q=AAPL')
+      expect(result).toBe('http://localhost:4000/stock/search?q=AAPL')
     })
 
     it('複数のクエリパラメータを正しく処理する', () => {

@@ -7,9 +7,9 @@ export const searchStocksSchema = z.object({
 export type SearchStocksDto = z.infer<typeof searchStocksSchema>
 
 /**
- * Finnhub株式検索結果の単一アイテムのスキーマ
+ * Stock株式検索結果の単一アイテムのスキーマ
  */
-export const finnhubSearchResultItemSchema = z.object({
+export const stockSearchResultItemSchema = z.object({
   description: z.string().describe('株式の説明'),
   displaySymbol: z.string().describe('表示用のシンボル'),
   symbol: z.string().describe('株式シンボル'),
@@ -17,14 +17,13 @@ export const finnhubSearchResultItemSchema = z.object({
 })
 
 /**
- * Finnhub株式検索レスポンスのスキーマ
+ * Stock株式検索レスポンスのスキーマ
  */
-export const finnhubSearchResponseSchema = z.object({
+export const stockSearchResponseSchema = z.object({
   count: z.number().int().min(0).describe('検索結果の件数'),
-  result: z.array(finnhubSearchResultItemSchema).describe('検索結果の配列'),
+  result: z.array(stockSearchResultItemSchema).describe('検索結果の配列'),
 })
 
-
 // 型の推論
-export type FinnhubSearchResultItem = z.infer<typeof finnhubSearchResultItemSchema>
-export type FinnhubSearchResponse = z.infer<typeof finnhubSearchResponseSchema>
+export type StockSearchResultItem = z.infer<typeof stockSearchResultItemSchema>
+export type StockSearchResponse = z.infer<typeof stockSearchResponseSchema>
