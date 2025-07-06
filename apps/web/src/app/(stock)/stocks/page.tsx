@@ -1,6 +1,8 @@
 'use client'
 
+import { ErrorBanner } from '@/components/ui/error-banner'
 import { Input } from '@/components/ui/input'
+import { EXCHANGE_NAMES } from '@/constants/stock-constants'
 import { useAuthSWR } from '@/lib/hooks/use-auth-swr'
 import { useDebounce } from '@/lib/hooks/use-debounce'
 import {
@@ -15,18 +17,14 @@ import { FiDollarSign, FiSearch, FiTrendingUp } from 'react-icons/fi'
 export default function StocksPage() {
   const router = useRouter()
   const [query, setQuery] = useState('')
-  const deferredQuery = useDebounce<string>(query, 500)
+  const deferredQuery = useDebounce<string>(query, 900)
 
   const { data, error, isLoading } = useAuthSWR<StockSearchResponse>({
     path: '/stocks/search',
     validateOutput: stockSearchResponseSchema,
-    params: { q: deferredQuery },
+    params: { search: deferredQuery },
     isFetch: deferredQuery !== '',
   })
-
-  if (error) {
-    return <div>エラーが発生しました</div>
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -70,6 +68,10 @@ export default function StocksPage() {
         </div>
 
         <div className="bg-white rounded-lg p-6 mb-8">
+          {error  && (
+            <ErrorBanner message={error.message} className="mt-0 mb-4" />
+          )}
+
           <div className="relative">
             <label
               htmlFor="stock-search"
@@ -96,11 +98,11 @@ export default function StocksPage() {
               {/* ローディング表示 */}
               {isLoading && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600" />
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-3 border-blue-600" />
                 </div>
               )}
             </div>
-            {data && data?.result.length > 0 ? (
+            {data?.results && data?.results.length > 0 ? (
               <div
                 className={clsx(
                   'mt-[10px]',
@@ -108,12 +110,12 @@ export default function StocksPage() {
                   'border border-gray-200 rounded-md shadow-md',
                 )}
               >
-                {data.result.map((stock, index) => (
+                {data.results.map((stock, index) => (
                   <button
-                    key={`${index}_${stock.displaySymbol}`}
+                    key={`${index}_${stock.ticker}`}
                     type="button"
                     onClick={() =>
-                      router.push(`/stocks/${stock.symbol.toLowerCase()}`)
+                      router.push(`/stocks/${stock.ticker.toLowerCase()}`)
                     }
                     className={clsx(
                       'w-full text-left px-4 py-3 hover:bg-gray-50',
@@ -122,25 +124,31 @@ export default function StocksPage() {
                       'cursor-pointer',
                     )}
                   >
-                    <div className="flex items-center justify-between gap-[5px]">
+                    <div className="flex items-center justify-between gap-[10px]">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <FiDollarSign className="h-4 w-4 text-green-600" />
+                        <div className="flex items-center gap-2 mb-1">
+                          <FiDollarSign className="h-4 w-4 text-green-600 shrink-0" />
                           <span className="font-medium text-gray-900">
-                            {stock.displaySymbol}
-                          </span>
-                          <span className="text-xs text-gray-500 uppercase">
-                            {stock.type}
+                            {stock.name || stock.ticker}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mt-1 truncate">
-                          {stock.description}
-                        </p>
+                        {/* 市場情報を表示 */}
+                        <div className="flex items-center gap-3 text-xs text-gray-500">
+                          <span className="flex items-center gap-1">
+                            <span className="font-medium">{stock.ticker}:</span>
+                            <span>
+                              {EXCHANGE_NAMES[stock.primary_exchange ?? ''] ??
+                                '取引先不明'}
+                            </span>
+                          </span>
+                        </div>
                       </div>
                       <div className="text-right shrink-0">
-                        <span className="text-xs text-gray-400">
-                          詳細を見る
-                        </span>
+                        <div className="flex flex-col items-end gap-1">
+                          <span className="text-xs text-gray-400">
+                            詳細を見る
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </button>

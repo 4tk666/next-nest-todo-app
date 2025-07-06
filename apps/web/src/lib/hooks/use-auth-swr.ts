@@ -15,7 +15,7 @@ export function useAuthSWR<Output>({
   params,
   isFetch = true,
 }: UseAuthSWRProps<Output>) {
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = useSWR<Output, Error>(
     isFetch ? [path, JSON.stringify(params)] : null, // SWRキー
     () => clientAuthenticatedReadFetch({ path, validateOutput, params }),
   )

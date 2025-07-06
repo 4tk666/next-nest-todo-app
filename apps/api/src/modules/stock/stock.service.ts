@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { z } from 'zod'
 import {
@@ -10,9 +10,11 @@ import {
 type StockFetchParams<T> = {
   endpoint: string
   params: {
-    q?: string
+    search?: string
     symbol?: string
     metric?: string
+    active?: 'true' | 'false' // 'true' or 'false'
+    market?: 'stocks'
   }
   validateOutput: z.Schema<T>
 }
@@ -56,10 +58,12 @@ export class StockService {
   }: StockFetchParams<T>): Promise<T> {
     // クエリ文字列の構築
     const searchParams = new URLSearchParams({
-      ...(params.q ? { q: params.q } : {}),
+      ...(params.search ? { search: params.search } : {}),
       ...(params.symbol ? { symbol: this.normalizeSymbol(params.symbol) } : {}),
       ...(params.metric ? { metric: params.metric } : {}),
-      token: this.apiKey ?? '',
+      ...(params.active ? { active: params.active } : {}),
+      ...(params.market ? { market: params.market } : {}),
+      apiKey: this.apiKey ?? '',
     })
 
     const url = `${this.baseUrl}/${endpoint}?${searchParams.toString()}`
@@ -68,8 +72,19 @@ export class StockService {
       const response = await fetch(url)
 
       if (!response.ok) {
-        throw new Error(
-          `Stock APIエラー: ${response.status} ${response.statusText}`,
+        if (response.status === 429) {
+          this.logger.warn(
+            `Stock API Rate Limit exceeded: ${response.status} ${response.statusText}`,
+          )
+          throw new HttpException(
+            'APIのリクエスト制限に達しました。しばらく時間をおいてから再度お試しください。',
+            HttpStatus.TOO_MANY_REQUESTS,
+          )
+        }
+
+        throw new HttpException(
+          `Stock APIリクエストに失敗しました: ${response.status} ${response.statusText}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         )
       }
 
@@ -82,15 +97,27 @@ export class StockService {
             'Stock API出力データの検証に失敗しました:',
             validationResult.error,
           )
-          throw new Error('Stock API出力データの検証に失敗しました')
+          throw new HttpException(
+            'データの形式が正しくありません。しばらく時間をおいてから再度お試しください。',
+            HttpStatus.INTERNAL_SERVER_ERROR,
+          )
         }
         return validationResult.data
       }
 
       return data as T
     } catch (error) {
+      // HttpExceptionはそのまま再スロー
+      if (error instanceof HttpException) {
+        throw error
+      }
+
+      // その他のエラー（ネットワークエラーなど）
       this.logger.error('Stock APIリクエスト中にエラーが発生しました:', error)
-      throw error
+      throw new HttpException(
+        'データの取得中にネットワークエラーが発生しました。しばらく時間をおいてから再度お試しください。',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      )
     }
   }
 
@@ -99,8 +126,12 @@ export class StockService {
    */
   async searchStocks(dto: SearchStocksDto): Promise<StockSearchResponse> {
     return this.stockFetch<StockSearchResponse>({
-      endpoint: 'search',
-      params: { q: dto.q },
+      endpoint: 'tickers',
+      params: {
+        search: dto.search,
+        active: 'true',
+        market: 'stocks', // 株式市場のみを対象
+      },
       validateOutput: stockSearchResponseSchema,
     })
   }
