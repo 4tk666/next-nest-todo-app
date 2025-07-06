@@ -1,13 +1,14 @@
-import { clientAuthenticatedReadFetch } from '@/lib/utils/fetch/client/client-auth-fetch'
+import { useAuthSWR } from '@/lib/hooks/use-auth-swr'
 import {
   type StockSearchResponse,
   stockSearchResponseSchema,
 } from '@ai-job-interview/packages/schemas/stocks/stock-schemas'
 
-export function fetchStockSearch(query: string) {
-  return clientAuthenticatedReadFetch<StockSearchResponse>({
-    path: 'stock/search/',
-    params: { q: query },
+export function getStockSearch(query: string) {
+  return useAuthSWR<StockSearchResponse>({
+    path: '/stocks',
     validateOutput: stockSearchResponseSchema,
+    params: { search: query },
+    isFetch: query !== '',
   })
 }

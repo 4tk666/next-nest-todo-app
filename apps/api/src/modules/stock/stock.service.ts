@@ -5,11 +5,13 @@ import {
   type SearchStocksDto,
   type StockSearchResponse,
   stockSearchResponseSchema,
+  type StockDetailResponse,
+  stockDetailResponseSchema,
 } from './dto/stock.dto'
 
 type StockFetchParams<T> = {
   endpoint: string
-  params: {
+  params?: {
     search?: string
     symbol?: string
     metric?: string
@@ -53,7 +55,7 @@ export class StockService {
    */
   private async stockFetch<T>({
     endpoint,
-    params,
+    params = {},
     validateOutput,
   }: StockFetchParams<T>): Promise<T> {
     // クエリ文字列の構築
@@ -133,6 +135,16 @@ export class StockService {
         market: 'stocks', // 株式市場のみを対象
       },
       validateOutput: stockSearchResponseSchema,
+    })
+  }
+
+  /**
+   * 株式詳細を取得する
+   */
+  async getStockDetails(ticker: string): Promise<StockDetailResponse> {
+    return this.stockFetch<StockDetailResponse>({
+      endpoint: `tickers/${ticker}`,
+      validateOutput: stockDetailResponseSchema,
     })
   }
 }
