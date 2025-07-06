@@ -4,10 +4,6 @@ export const searchStocksSchema = z.object({
   search: z.string(),
 })
 
-export const detailStocksSchema = z.object({
-  ticker: z.string().min(1, 'ティッカーシンボルを入力してください'),
-})
-
 export type SearchStocksDto = z.infer<typeof searchStocksSchema>
 
 /**
