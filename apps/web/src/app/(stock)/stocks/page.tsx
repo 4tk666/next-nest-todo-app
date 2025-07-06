@@ -3,12 +3,8 @@
 import { ErrorBanner } from '@/components/ui/error-banner'
 import { Input } from '@/components/ui/input'
 import { EXCHANGE_NAMES } from '@/constants/stock-constants'
-import { useAuthSWR } from '@/lib/hooks/use-auth-swr'
+import { getStockSearch } from '@/features/stocks/api/fetch-stock-search'
 import { useDebounce } from '@/lib/hooks/use-debounce'
-import {
-  type StockSearchResponse,
-  stockSearchResponseSchema,
-} from '@ai-job-interview/packages/schemas/stocks/stock-schemas'
 import { clsx } from 'clsx'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -19,12 +15,7 @@ export default function StocksPage() {
   const [query, setQuery] = useState('')
   const deferredQuery = useDebounce<string>(query, 900)
 
-  const { data, error, isLoading } = useAuthSWR<StockSearchResponse>({
-    path: '/stocks/search',
-    validateOutput: stockSearchResponseSchema,
-    params: { search: deferredQuery },
-    isFetch: deferredQuery !== '',
-  })
+  const { data, error, isLoading } = getStockSearch(deferredQuery)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -68,7 +59,7 @@ export default function StocksPage() {
         </div>
 
         <div className="bg-white rounded-lg p-6 mb-8">
-          {error  && (
+          {error && (
             <ErrorBanner message={error.message} className="mt-0 mb-4" />
           )}
 
