@@ -5,8 +5,8 @@ import {
   type SearchStocksDto,
   type StockDetailResponse,
   StockSearchResponse,
-  getStockDetailSchema,
   searchStocksSchema,
+  tickerParamSchema,
 } from './dto/stock.dto'
 import { StockService } from './stock.service'
 
@@ -36,7 +36,7 @@ export class StockController {
    */
   @Get(':ticker')
   async getStockDetails(
-    @Param('ticker', new ZodValidationPipe(getStockDetailSchema))
+    @Param('ticker', new ZodValidationPipe(tickerParamSchema))
     ticker: string,
   ): Promise<StockDetailResponse> {
     return this.stockService.getStockDetails(ticker)
