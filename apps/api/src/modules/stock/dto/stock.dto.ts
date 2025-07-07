@@ -91,18 +91,16 @@ export const stockDetailResponseSchema = z.object({
 })
 
 /**
- * 株式詳細取得パラメータのスキーマ
+ * 株式詳細取得パラメータのスキーマ（URLパラメータ用）
  */
-export const getStockDetailSchema = z.object({
-  ticker: z.string().min(1, 'ティッカーシンボルを入力してください'),
-})
+export const tickerParamSchema = z.string().min(1, 'ティッカーシンボルを入力してください')
+
 
 // 型の推論
 export type StockAddress = z.infer<typeof stockAddressSchema>
 export type StockBranding = z.infer<typeof stockBrandingSchema>
 export type StockDetailResult = z.infer<typeof stockDetailResultSchema>
 export type StockDetailResponse = z.infer<typeof stockDetailResponseSchema>
-export type GetStockDetailDto = z.infer<typeof getStockDetailSchema>
 // 型の推論
 export type StockSearchResultItem = z.infer<typeof stockSearchResultItemSchema>
 export type StockSearchResponse = z.infer<typeof stockSearchResponseSchema>

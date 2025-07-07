@@ -105,9 +105,7 @@ export default function StocksPage() {
                   <button
                     key={`${index}_${stock.ticker}`}
                     type="button"
-                    onClick={() =>
-                      router.push(`/stocks/${stock.ticker.toLowerCase()}`)
-                    }
+                    onClick={() => router.push(`/stocks/${stock.ticker}`)}
                     className={clsx(
                       'w-full text-left px-4 py-3 hover:bg-gray-50',
                       'border-b border-gray-100 last:border-b-0',
