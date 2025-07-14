@@ -1,13 +1,13 @@
+import {
+  StockDetailResponse,
+  StockSearchResponse,
+  stockDetailResponseSchema,
+  stockSearchResponseSchema,
+} from '@ai-job-interview/packages/schemas/stocks/stock-schemas'
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { z } from 'zod'
-import {
-  type SearchStocksDto,
-  type StockSearchResponse,
-  stockSearchResponseSchema,
-  type StockDetailResponse,
-  stockDetailResponseSchema,
-} from './dto/stock.dto'
+import { SearchStocksDto } from './dto/stock.dto'
 
 type StockFetchParams<T> = {
   endpoint: string
