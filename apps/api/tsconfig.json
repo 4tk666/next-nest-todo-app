@@ -17,17 +17,19 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ai-job-interview/packages/*": ["../../packages/*"]
+    }
   },
-  "include": [
-    "src/**/*", // srcディレクトリ内のすべてのファイルを対象
-  ],
+  "include": ["src/**/*", "../../packages/**/*.ts"],
   "exclude": [
     "node_modules",
     "dist",
     "test",
     "coverage",
-    "**/*.spec.ts", // テストファイルは除外
+    "**/*.spec.ts",
     "**/*.test.ts",
-    "vitest.config.ts" // 設定ファイルは除外
+    "vitest.config.ts"
   ]
 }
