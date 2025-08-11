@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@/*": ["./src/*"],
-      "@ai-job-interview/packages/*": ["../../packages/*"]
+      "@next-nest-todo-app/packages/*": ["../../packages/*"]
     }
   },
   "include": ["src/**/*", "../../packages/**/*.ts"],

@@ -1,11 +1,11 @@
 import {
   CreateUserInput,
   createUserSchema,
-} from '@ai-job-interview/packages/schemas/user/create-user-schema'
+} from '@next-nest-todo-app/packages/schemas/user/create-user-schema'
 import {
   SignInUserInput,
   signInUserSchema,
-} from '@ai-job-interview/packages/schemas/user/sign-in-user.schema'
+} from '@next-nest-todo-app/packages/schemas/user/sign-in-user.schema'
 import { Body, Controller, Post } from '@nestjs/common'
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
 import { AuthService } from './auth.service'

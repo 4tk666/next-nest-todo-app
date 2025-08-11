@@ -1,7 +1,7 @@
 import {
   StockDetailResponse,
   StockSearchResponse,
-} from '@ai-job-interview/packages/schemas/stocks/stock-schemas'
+} from '@next-nest-todo-app/packages/schemas/stocks/stock-schemas'
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common'
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
 import { JwtAuthGuard } from '../../common/jwt/guards/jwt-auth.guard'

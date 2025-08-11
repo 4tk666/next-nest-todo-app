@@ -5,7 +5,7 @@ import { serverAuthenticatedReadFetch } from '@/lib/utils/fetch/server/server-au
 import {
   type UserProfile,
   userProfileSchema,
-} from '@ai-job-interview/packages/schemas/user/profile'
+} from '@next-nest-todo-app/packages/schemas/user/profile'
 
 /**
  * 現在ログイン中のユーザーのプロフィール情報を取得する

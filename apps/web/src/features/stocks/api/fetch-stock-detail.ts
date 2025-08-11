@@ -2,7 +2,7 @@ import { serverAuthenticatedReadFetch } from '@/lib/utils/fetch/server/server-au
 import {
   type StockDetailResponse,
   stockDetailResponseSchema,
-} from '@ai-job-interview/packages/schemas/stocks/stock-schemas'
+} from '@next-nest-todo-app/packages/schemas/stocks/stock-schemas'
 
 /**
  * 株式詳細情報を取得するためのカスタムフック（クライアントサイド）

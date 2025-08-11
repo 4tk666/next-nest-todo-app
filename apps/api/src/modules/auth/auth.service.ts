@@ -1,5 +1,5 @@
-import { CreateUserInput } from '@ai-job-interview/packages/schemas/user/create-user-schema'
-import { SignInUserInput } from '@ai-job-interview/packages/schemas/user/sign-in-user.schema'
+import { CreateUserInput } from '@next-nest-todo-app/packages/schemas/user/create-user-schema'
+import { SignInUserInput } from '@next-nest-todo-app/packages/schemas/user/sign-in-user.schema'
 import {
   Injectable,
   NotFoundException,

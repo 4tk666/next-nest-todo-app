@@ -3,7 +3,7 @@ import {
   StockSearchResponse,
   stockDetailResponseSchema,
   stockSearchResponseSchema,
-} from '@ai-job-interview/packages/schemas/stocks/stock-schemas'
+} from '@next-nest-todo-app/packages/schemas/stocks/stock-schemas'
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { z } from 'zod'
