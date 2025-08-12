@@ -1,7 +1,7 @@
 import {
   type TemplateResponse,
   templateResponseSchema,
-} from '@ai-job-interview/packages/schemas/common/template-response'
+} from '@next-nest-todo-app/packages/schemas/common/template-response'
 
 /**
  * URLにクエリパラメータを追加する関数

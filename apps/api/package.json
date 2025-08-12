@@ -31,7 +31,7 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
-    "@ai-job-interview/packages": "workspace:*",
+    "@next-nest-todo-app/packages": "workspace:*",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",

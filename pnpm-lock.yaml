@@ -17,7 +17,7 @@ importers:
 
   apps/api:
     dependencies:
-      '@ai-job-interview/packages':
+      '@next-nest-todo-app/packages':
         specifier: workspace:*
         version: link:../../packages
       '@nestjs/common':
@@ -138,7 +138,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@ai-job-interview/packages':
+      '@next-nest-todo-app/packages':
         specifier: workspace:*
         version: link:../../packages
       '@radix-ui/react-checkbox':
