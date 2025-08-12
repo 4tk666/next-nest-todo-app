@@ -1,8 +1,4 @@
-import {
-  ForbiddenException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { CreateProjectInput } from '@next-nest-todo-app/packages/schemas/project/create-project-schema'
 import { PrismaService } from 'src/database/prisma/prisma.service'
 
@@ -20,6 +16,7 @@ export class ProjectService {
     return this.prismaService.project.create({
       data: {
         name: createProjectInput.name,
+        description: createProjectInput.description,
         ownerId: userId,
       },
     })
