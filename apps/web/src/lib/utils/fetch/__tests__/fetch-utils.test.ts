@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   addQueryParams,
