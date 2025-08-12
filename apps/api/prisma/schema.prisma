@@ -14,15 +14,95 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum MemberRole {
+  ADMIN
+  MEMBER
+}
+
 // ユーザーモデル（認証対応）
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
+  id        String   @id @default(cuid())
   email     String   @unique @db.VarChar(255) // ユニークなメールアドレス
-  name      String?  @db.VarChar(255) // ユーザー名（オプション）
+  name      String   @db.VarChar(255)
   password  String   @db.VarChar(255) // ハッシュ化されたパスワード
+  avatarUrl String? // プロフィール画像
   createdAt DateTime @default(now()) @db.Timestamp(0) // 作成日時
   updatedAt DateTime @updatedAt @db.Timestamp(0) // 更新日時
 
+  projects       Project[]       @relation("UserProjects") // ユーザーが所有するプロジェクトのリレーション
+  projectMembers ProjectMember[]
+  tasks          Task[]          @relation("UserTasks")
+  comments       Comment[]
+
   // 実際のデータベーステーブル名を指定
   @@map("users")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String   @db.VarChar(255) // プロジェクト名
+  description String?  @db.Text // プロジェクトの説明（オプション）
+  ownerId     String
+  createdAt   DateTime @default(now()) @db.Timestamp(0) // 作成日時
+  updatedAt   DateTime @updatedAt @db.Timestamp(0) // 更新日時
+
+  owner          User            @relation("UserProjects", fields: [ownerId], references: [id])
+  projectMembers ProjectMember[]
+  tasks          Task[]
+
+  // 外部キー制約
+  @@map("projects")
+}
+
+model ProjectMember {
+  id        String     @id @default(cuid())
+  projectId String // プロジェクトID
+  userId    String // ユーザーID
+  role      MemberRole @default(MEMBER) // メンバーの役割（デフォルトは "MEMBER"）
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamp(0) // 作成日時
+  updatedAt DateTime @updatedAt @db.Timestamp(0) // 更新日時
+
+  @@unique([projectId, userId]) // プロジェクトとユーザーの組み合わせはユニーク
+  @@map("project_members")
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String     @db.VarChar(255) // タスクのタイトル
+  description String?    @db.Text // タスクの説明（オプション）
+  status      TaskStatus @default(TODO) // タスクのステータス（デフォルトは "TODO"）
+  projectId   String // プロジェクトID
+  assignedId  String? // 担当者のユーザーID（オプション）
+  dueDate     DateTime?
+  createdAt   DateTime   @default(now()) @db.Timestamp(0) // 作成日時
+  updatedAt   DateTime   @updatedAt @db.Timestamp(0) // 更新日時
+
+  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assigned User?     @relation("UserTasks", fields: [assignedId], references: [id], onDelete: SetNull)
+  comments Comment[]
+
+  @@map("tasks")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text // コメントの内容
+  taskId    String // タスクID
+  userId    String? // コメントを投稿したユーザーID
+  createdAt DateTime @default(now()) @db.Timestamp(0) // 作成日時
+
+  task Task  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("comments")
 }
