@@ -29,7 +29,7 @@ export function CreateProjectForm() {
             id="name"
             label="プロジェクト名"
             type="text"
-            placeholder="メールアドレスを入力"
+            placeholder="プロジェクト名を入力"
             defaultValue={state?.values?.name}
             errors={state?.error?.fields?.name}
           />
