@@ -8,4 +8,6 @@ export const ROUTES = {
   PROFILE: '/profile',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
+  PROJECTS: '/projects',
+  CREATE_PROJECT: '/projects/create',
 } as const
