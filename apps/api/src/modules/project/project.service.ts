@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { PROJECT_ROLE } from '@next-nest-todo-app/packages/constants/projectRole'
 import { CreateProjectInput } from '@next-nest-todo-app/packages/schemas/project/create-project-schema'
 import { PrismaService } from 'src/database/prisma/prisma.service'
 
@@ -28,7 +29,7 @@ export class ProjectService {
         data: {
           userId,
           projectId: project.id,
-          role: 'ADMIN',
+          role: PROJECT_ROLE.ADMIN, // 作成者はADMIN権限
         },
       })
 
