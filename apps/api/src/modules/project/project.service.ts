@@ -7,6 +7,21 @@ import { PrismaService } from 'src/database/prisma/prisma.service'
 export class ProjectService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  async getAllProjects(userId: string) {
+    return this.prismaService.project.findMany({
+      where: {
+        projectMembers: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+  }
+
   /**
    * プロジェクトを作成
    * @param userId 作成者のユーザーID
