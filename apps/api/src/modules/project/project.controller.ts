@@ -1,10 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common'
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
 import {
   CreateProjectInput,
   createProjectSchema,
@@ -18,6 +12,16 @@ import { ProjectService } from './project.service'
 @UseGuards(JwtAuthGuard)
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
+
+  /**
+   * ユーザーのプロジェクト一覧を取得
+   * @param req リクエストオブジェクト（JWTから取得したユーザー情報が含まれる）
+   * @returns ユーザーのプロジェクト一覧
+   */
+  @Get()
+  async getAllProjects(@Request() req: AuthenticatedRequest) {
+    return this.projectService.getAllProjects(req.user.sub)
+  }
 
   /**
    * プロジェクトを作成
