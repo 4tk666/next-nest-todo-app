@@ -32,9 +32,12 @@ export class ProjectController {
   }
 
   /**
-   * プロジェクトの詳細情報を取得
-   * @param projectId プロジェクトID
+   * プロジェクトの詳細情報を取得します。
+   * @param userId プロジェクトにアクセスするユーザーのID
+   * @param projectId 取得するプロジェクトのID
    * @returns プロジェクトの詳細情報
+   * @throws NotFoundException 指定されたプロジェクトが存在しない場合
+   * @throws ForbiddenException ユーザーがプロジェクトのメンバーでない場合
    */
   @Get(':projectId')
   async getProjectDetail(
