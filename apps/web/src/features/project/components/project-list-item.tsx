@@ -1,5 +1,6 @@
 import type { Project } from '@next-nest-todo-app/packages/schemas/project/project-schema'
 import { clsx } from 'clsx'
+import Link from 'next/link'
 
 /**
  * 個別のプロジェクト項目コンポーネント
@@ -12,7 +13,8 @@ type ProjectListItemProps = {
 
 export function ProjectListItem({ project }: ProjectListItemProps) {
   return (
-    <div
+    <Link
+      href={`/projects/${project.id}`}
       className={clsx(
         'flex items-center gap-3',
         'px-3 py-2',
@@ -37,6 +39,6 @@ export function ProjectListItem({ project }: ProjectListItemProps) {
 
       {/* プロジェクト名 */}
       <span className={clsx('truncate', 'flex-1')}>{project.name}</span>
-    </div>
+    </Link>
   )
 }
