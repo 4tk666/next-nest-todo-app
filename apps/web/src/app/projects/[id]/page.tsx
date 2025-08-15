@@ -1,3 +1,4 @@
+import { getProjectDetail } from '@/features/project/api/project-api'
 import clsx from 'clsx'
 import Link from 'next/link'
 import {
@@ -21,20 +22,8 @@ export default async function ProjectDetailPage({
   params,
 }: ProjectDetailPageProps) {
   const { id } = await params
-  // TODO: APIからプロジェクトデータを取得
-  const mockProject = {
-    id: id,
-    name: '部門間プロジェクトの計画',
-    description: 'このプロジェクトの目的は何ですか？',
-    status: '順調',
-    owner: {
-      name: 'チーム ワークスペース',
-      initials: 'TS',
-    },
-    members: [{ name: 'あなた', initials: 'TS', role: 'プロジェクトオーナー' }],
-    createdAt: '5月27日',
-    resources: '主な参考資料',
-  }
+
+  const projectDetail = await getProjectDetail(id)
 
   return (
     <div className={clsx('min-h-screen', 'bg-gray-50')}>
@@ -153,7 +142,7 @@ export default async function ProjectDetailPage({
                 プロジェクトの説明
               </h2>
               <p className={clsx('text-gray-600', 'mb-4')}>
-                {mockProject.description}
+                {projectDetail.description}
               </p>
             </div>
 
@@ -183,10 +172,10 @@ export default async function ProjectDetailPage({
                       'text-sm font-medium',
                     )}
                   >
-                    {mockProject.members[0].initials}
+                    {'テスト'}
                   </div>
                   <span className={clsx('text-red-600 font-medium')}>
-                    {mockProject.members[0].role}
+                    {'テスト'}
                   </span>
                 </div>
                 <Button variant="outline">

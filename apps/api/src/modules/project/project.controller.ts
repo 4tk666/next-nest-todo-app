@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common'
 import {
   CreateProjectInput,
   createProjectSchema,
@@ -21,6 +29,19 @@ export class ProjectController {
   @Get()
   async getAllProjects(@Request() req: AuthenticatedRequest) {
     return this.projectService.getAllProjects(req.user.sub)
+  }
+
+  /**
+   * プロジェクトの詳細情報を取得
+   * @param projectId プロジェクトID
+   * @returns プロジェクトの詳細情報
+   */
+  @Get(':projectId')
+  async getProjectDetail(
+    @Param('projectId') projectId: string,
+    @Request() req: AuthenticatedRequest,
+  ) {
+    return this.projectService.getProjectDetail(req.user.sub, projectId)
   }
 
   /**

@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common'
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { PROJECT_ROLE } from '@next-nest-todo-app/packages/constants/projectRole'
 import { CreateProjectInput } from '@next-nest-todo-app/packages/schemas/project/create-project-schema'
+import { ProjectDetail } from '@next-nest-todo-app/packages/schemas/project/project-schema'
 import { PrismaService } from 'src/database/prisma/prisma.service'
 
 @Injectable()
@@ -20,6 +25,43 @@ export class ProjectService {
         createdAt: 'desc',
       },
     })
+  }
+
+  async getProjectDetail(userId: string, projectId: string) {
+    const projectDetail: ProjectDetail | null =
+      await this.prismaService.project.findUnique({
+        where: {
+          id: projectId,
+        },
+        include: {
+          projectMembers: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      })
+
+    if (!projectDetail) {
+      throw new NotFoundException('指定されたプロジェクトが見つかりません')
+    }
+
+    const isMember = projectDetail.projectMembers.some(
+      (member) => member.user.id === userId,
+    )
+
+    if (!isMember) {
+      throw new ForbiddenException(
+        'このプロジェクトにアクセスする権限がありません',
+      )
+    }
+
+    return projectDetail
   }
 
   /**
