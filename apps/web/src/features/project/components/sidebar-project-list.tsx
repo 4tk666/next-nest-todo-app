@@ -1,4 +1,4 @@
-import type { Projects } from '@next-nest-todo-app/packages/schemas/project'
+import type { Projects } from '@next-nest-todo-app/packages/schemas/project/project-schema'
 import { clsx } from 'clsx'
 import Link from 'next/link'
 import { HiPlus } from 'react-icons/hi2'

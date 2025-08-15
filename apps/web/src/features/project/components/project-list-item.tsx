@@ -1,4 +1,4 @@
-import type { Project } from '@next-nest-todo-app/packages/schemas/project'
+import type { Project } from '@next-nest-todo-app/packages/schemas/project/project-schema'
 import { clsx } from 'clsx'
 
 /**

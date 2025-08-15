@@ -15,8 +15,8 @@ export const projectSchema = z.object({
     .max(1000, '説明は1000文字以内で入力してください')
     .nullable(),
   ownerId: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 })
 
 /**
