@@ -28,12 +28,7 @@ export default async function RootLayout({
           <Header />
           <div className={clsx('flex flex-1', 'h-[calc(100vh-64px)]')}>
             <Sidebar />
-            <main
-              className={clsx(
-                'flex-1 p-4 sm:p-6 lg:p-8 mt-16',
-                isLoggedIn && 'ml-64',
-              )}
-            >
+            <main className={clsx('flex-1 mt-16', isLoggedIn && 'ml-64')}>
               {children}
             </main>
           </div>

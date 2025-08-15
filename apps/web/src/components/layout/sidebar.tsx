@@ -22,8 +22,7 @@ export async function Sidebar() {
       className={clsx(
         'fixed left-0 top-16 z-40',
         'w-64 h-full',
-        'bg-gray-800',
-        'shadow-sm',
+        'border-r-[0.5px] border-[#808080] bg-[#2E2E31]',
       )}
     >
       <nav className="p-4 border-b border-gray-700">
@@ -32,7 +31,7 @@ export async function Sidebar() {
             <Link
               href="/profile"
               className={clsx(
-                'block px-4 py-2 rounded-lg',
+                'block px-4 py-2 rounded-lg bold',
                 'text-gray-300 hover:bg-gray-700 hover:text-white',
                 'transition-colors duration-200',
               )}
