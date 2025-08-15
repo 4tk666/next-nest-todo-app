@@ -47,17 +47,17 @@ export function TabsComponent({
     >
       {/* タブトリガー部分 */}
       <Tabs.List
-        className={cn('flex border-b border-gray-200 mb-6', listClassName)}
+        className={cn('flex border-b-[0.5px] border-gray-200 mb-6', listClassName)}
       >
         {items.map((item) => (
           <Tabs.Trigger
             key={item.value}
             value={item.value}
             className={cn(
-              'px-4 py-2 text-sm font-medium text-gray-600',
+              'px-4 py-2 text-sm font-medium text-[]',
               'border-b-2 border-transparent',
-              'hover:text-gray-900 hover:border-gray-300',
-              'data-[state=active]:text-blue-600 data-[state=active]:border-blue-600',
+              'hover:font-bold',
+              'data-[state=active]:font-bold data-[state=active]:border-b-white',
               'cursor-pointer',
               item.triggerClassName,
             )}
