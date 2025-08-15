@@ -3,8 +3,8 @@
 @import "react-datepicker/dist/react-datepicker.css";
 
 :root {
-  --background: #121212;
-  --foreground: #f8f8f8;
+  --background: #222324;
+  --foreground: #bdc1c6;
 }
 
 body {

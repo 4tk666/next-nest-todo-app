@@ -31,7 +31,7 @@ export function LinkButton({
       case 'outline':
         return cn(
           'text-indigo-600 border border-indigo-600',
-          'bg-transparent hover:bg-indigo-50',
+          'bg-white hover:bg-indigo-50',
           'focus-visible:outline-indigo-600',
         )
       default:

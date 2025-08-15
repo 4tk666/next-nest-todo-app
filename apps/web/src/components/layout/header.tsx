@@ -10,13 +10,13 @@ export async function Header() {
   const token = cookieStore.get(AUTH_TOKEN_KEY)
 
   return (
-    <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
+    <header className="bg-[#2E2E31] border-b-[0.5px] border-[#808080] fixed top-0 left-0 w-full z-50">
       <div className={clsx('max-w-7xl mx-auto', 'px-4 sm:px-6 lg:px-8')}>
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="text-xl font-bold text-gray-800">
-                NextTemplate
+              <Link href="/" className="text-xl font-bold text-[#bdc1c6]">
+                Tasks
               </Link>
             </div>
           </div>

@@ -1,8 +1,6 @@
 import { getProjectDetail } from '@/features/project/api/project-api'
 import clsx from 'clsx'
-import Link from 'next/link'
 import {
-  MdArrowBack,
   MdCalendarToday,
   MdDescription,
   MdPerson,
@@ -26,47 +24,15 @@ export default async function ProjectDetailPage({
   const projectDetail = await getProjectDetail(id)
 
   return (
-    <div className={clsx('min-h-screen', 'bg-gray-50')}>
-      {/* ヘッダー */}
-      <div className={clsx('border-b border-gray-200', 'bg-white')}>
-        <div className={clsx('mx-auto max-w-7xl', 'px-4 sm:px-6 lg:px-8')}>
-          <div className={clsx('flex items-center justify-between', 'py-6')}>
-            <div className={clsx('flex items-center space-x-4')}>
-              <Link
-                href="/projects"
-                className={clsx(
-                  'inline-flex items-center',
-                  'text-gray-500 hover:text-gray-700',
-                  'text-sm',
-                )}
-              >
-                <MdArrowBack className="w-4 h-4 mr-1" />
-                プロジェクト一覧
-              </Link>
-              <span className={clsx('text-gray-300')}>|</span>
-              <div
-                className={clsx('flex items-center', 'text-sm text-gray-500')}
-              >
-                <span>部門間プロジェクトの計画</span>
-              </div>
-            </div>
-            <div className={clsx('flex items-center space-x-3')}>
-              <span className={clsx('text-sm text-gray-500')}>
-                ステータスを設定
-              </span>
-              <Button variant="outline">共有</Button>
-              <Button variant="outline">カスタマイズ</Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* メインコンテンツ */}
+    <div>
       <div
-        className={clsx('mx-auto max-w-7xl', 'px-4 sm:px-6 lg:px-8', 'py-8')}
+        className={clsx(
+          'border-b-[0.5px]  border-[#808080]',
+          'px-[20px] py-[10px]',
+        )}
       >
-        {/* タブナビゲーション */}
-        <div className={clsx('border-b border-gray-200', 'mb-8')}>
+        <h2 className="text-[20px]">{projectDetail.name}</h2>
+        <div>
           <nav className={clsx('flex space-x-8')}>
             <button
               type="button"
@@ -83,7 +49,7 @@ export default async function ProjectDetailPage({
               className={clsx(
                 'border-b-2 border-transparent',
                 'py-2 px-1',
-                'text-sm font-medium text-gray-500',
+                'text-sm font-medium',
                 'hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -94,7 +60,7 @@ export default async function ProjectDetailPage({
               className={clsx(
                 'border-b-2 border-transparent',
                 'py-2 px-1',
-                'text-sm font-medium text-gray-500',
+                'text-sm font-medium',
                 'hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -105,7 +71,7 @@ export default async function ProjectDetailPage({
               className={clsx(
                 'border-b-2 border-transparent',
                 'py-2 px-1',
-                'text-sm font-medium text-gray-500',
+                'text-sm font-medium',
                 'hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -116,7 +82,7 @@ export default async function ProjectDetailPage({
               className={clsx(
                 'border-b-2 border-transparent',
                 'py-2 px-1',
-                'text-sm font-medium text-gray-500',
+                'text-sm font-medium',
                 'hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -124,7 +90,12 @@ export default async function ProjectDetailPage({
             </button>
           </nav>
         </div>
+      </div>
 
+      {/* メインコンテンツ */}
+      <div
+        className={clsx('mx-auto max-w-7xl', 'px-4 sm:px-6 lg:px-8', 'py-8')}
+      >
         <div className={clsx('grid grid-cols-1 lg:grid-cols-3', 'gap-8')}>
           {/* 左側カラム */}
           <div className={clsx('lg:col-span-2', 'space-y-6')}>
@@ -209,7 +180,7 @@ export default async function ProjectDetailPage({
                 <MdDescription
                   className={clsx('mx-auto h-12 w-12', 'text-gray-400', 'mb-4')}
                 />
-                <p className={clsx('text-gray-500', 'mb-4')}>
+                <p className={clsx('mb-4')}>
                   プロジェクトの要旨や関連資料を保ってチームの
                   <br />
                   照準を共通のビジョンに合わせましょう。
@@ -224,7 +195,7 @@ export default async function ProjectDetailPage({
                     className={clsx(
                       'inline-flex items-center',
                       'px-3 py-2',
-                      'text-sm text-gray-500',
+                      'text-sm',
                       'hover:text-gray-700',
                     )}
                   >
@@ -291,7 +262,7 @@ export default async function ProjectDetailPage({
                 <MdSchedule
                   className={clsx('mx-auto h-12 w-12', 'text-gray-400', 'mb-2')}
                 />
-                <p className={clsx('text-sm text-gray-500')}>期日なし</p>
+                <p className={clsx('text-sm ')}>期日なし</p>
               </div>
 
               <div className={clsx('space-y-4')}>
@@ -303,7 +274,7 @@ export default async function ProjectDetailPage({
                     <p className={clsx('text-sm font-medium', 'text-gray-900')}>
                       チーム ワークスペース が参加しました
                     </p>
-                    <p className={clsx('text-xs text-gray-500')}>5月27日</p>
+                    <p className={clsx('text-xs ')}>5月27日</p>
                   </div>
                 </div>
 
@@ -315,7 +286,7 @@ export default async function ProjectDetailPage({
                     <p className={clsx('text-sm font-medium', 'text-gray-900')}>
                       あなたが参加しました
                     </p>
-                    <p className={clsx('text-xs text-gray-500')}>5月27日</p>
+                    <p className={clsx('text-xs ')}>5月27日</p>
                   </div>
                 </div>
 
@@ -327,7 +298,7 @@ export default async function ProjectDetailPage({
                     <p className={clsx('text-sm font-medium', 'text-gray-900')}>
                       プロジェクトが作成されました
                     </p>
-                    <p className={clsx('text-xs text-gray-500')}>5月27日</p>
+                    <p className={clsx('text-xs ')}>5月27日</p>
                   </div>
                 </div>
               </div>
