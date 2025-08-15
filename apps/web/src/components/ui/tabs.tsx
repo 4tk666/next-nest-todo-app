@@ -54,7 +54,7 @@ export function TabsComponent({
             key={item.value}
             value={item.value}
             className={cn(
-              'px-4 py-2 text-sm font-medium text-[]',
+              'px-4 py-2 text-sm font-medium',
               'border-b-2 border-transparent',
               'hover:font-bold',
               'data-[state=active]:font-bold data-[state=active]:border-b-white',
