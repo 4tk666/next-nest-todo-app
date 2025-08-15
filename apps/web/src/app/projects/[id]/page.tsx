@@ -10,18 +10,20 @@ import {
 import { Button } from '../../../components/ui/button'
 
 type ProjectDetailPageProps = {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 /**
  * プロジェクト詳細ページ
  * プロジェクトの詳細情報を表示するページです
  */
-export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
-
+export default async function ProjectDetailPage({
+  params,
+}: ProjectDetailPageProps) {
+  const { id } = await params
   // TODO: APIからプロジェクトデータを取得
   const mockProject = {
-    id: params.id,
+    id: id,
     name: '部門間プロジェクトの計画',
     description: 'このプロジェクトの目的は何ですか？',
     status: '順調',
