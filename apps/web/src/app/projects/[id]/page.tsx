@@ -49,7 +49,7 @@ export default async function ProjectDetailPage({
               className={clsx(
                 'border-b-2 border-transparent',
                 'py-2 px-1',
-                'text-sm font-medium ',
+                'text-sm font-medium',
                 'hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -60,7 +60,7 @@ export default async function ProjectDetailPage({
               className={clsx(
                 'border-b-2 border-transparent',
                 'py-2 px-1',
-                'text-sm font-medium ',
+                'text-sm font-medium',
                 'hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -71,7 +71,7 @@ export default async function ProjectDetailPage({
               className={clsx(
                 'border-b-2 border-transparent',
                 'py-2 px-1',
-                'text-sm font-medium ',
+                'text-sm font-medium',
                 'hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -82,7 +82,7 @@ export default async function ProjectDetailPage({
               className={clsx(
                 'border-b-2 border-transparent',
                 'py-2 px-1',
-                'text-sm font-medium ',
+                'text-sm font-medium',
                 'hover:text-gray-700 hover:border-gray-300',
               )}
             >

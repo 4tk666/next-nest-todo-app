@@ -31,7 +31,7 @@ export async function Sidebar() {
             <Link
               href="/profile"
               className={clsx(
-                'block px-4 py-2 rounded-lg bold',
+                'block px-4 py-2 rounded-lg font-bold',
                 'text-gray-300 hover:bg-gray-700 hover:text-white',
                 'transition-colors duration-200',
               )}
