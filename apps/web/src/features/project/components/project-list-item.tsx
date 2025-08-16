@@ -14,7 +14,7 @@ type ProjectListItemProps = {
 export function ProjectListItem({ project }: ProjectListItemProps) {
   return (
     <Link
-      href={`/projects/${project.id}`}
+      href={`/projects/${project.id}/list`}
       className={clsx(
         'flex items-center gap-3',
         'px-3 py-2',
