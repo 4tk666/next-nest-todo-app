@@ -1,5 +1,5 @@
 import { getProjectDetail } from '@/features/project/api/project-api'
-import ProjectTabs from '@/features/project/components/project-tabs'
+import { ProjectTabs } from '@/features/project/components/project-tabs'
 import clsx from 'clsx'
 
 export default async function ProjectLayout({

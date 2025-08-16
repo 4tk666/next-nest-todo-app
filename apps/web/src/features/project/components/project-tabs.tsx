@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-export default function ProjectTabs({ projectId }: { projectId: string }) {
+export function ProjectTabs({ projectId }: { projectId: string }) {
   const pathname = usePathname()
 
   const tabItems = [
