@@ -14,6 +14,7 @@ import {
 import { JwtAuthGuard } from 'src/common/jwt/guards/jwt-auth.guard'
 import { AuthenticatedRequest } from 'src/common/jwt/strategies/jwt.strategy'
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
+import { ProjectIdQuery, projectIdQuerySchema } from './scehma/task.schema'
 import { TaskService } from './task.service'
 
 /**
@@ -34,10 +35,11 @@ export class TaskController {
    */
   @Get()
   async getTasksByProject(
-    @Query('projectId') projectId: string,
+    @Query(new ZodValidationPipe(projectIdQuerySchema))
+    query: ProjectIdQuery,
     @Request() req: AuthenticatedRequest,
   ) {
-    return this.taskService.getTasksByProject(req.user.sub, projectId)
+    return this.taskService.getTasksByProject(req.user.sub, query.projectId)
   }
 
   /**

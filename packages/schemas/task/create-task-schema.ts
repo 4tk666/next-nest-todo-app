@@ -39,7 +39,7 @@ export const createTaskSchema = z.object({
    * 期限日
    * タスクの期限を指定します（オプション）
    */
-  dueDate: z.string().datetime().optional(),
+  dueDate: z.coerce.date().optional(),
 })
 
 /**
