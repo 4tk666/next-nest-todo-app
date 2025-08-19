@@ -29,7 +29,7 @@ export function TaskForm({ projectId, onSuccess, onCancel }: TodoFormProps) {
       formData: FormData,
     ) => {
       const result = await createTaskAction(prevState, formData)
-      console.log('タスク作成結果:', result)
+
       if (result.success) {
         // 成功時のコールバック
         onSuccess?.()
