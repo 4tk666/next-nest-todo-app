@@ -37,7 +37,7 @@ export function SideOverlay({
           flex flex-col border-t-[0.5px] border-l-[0.5px] h-[calc(100vh-64px)]
         `}
       >
-        <div className="flex items-center justify-between p-6 border-b-[0.5px] border-gray-[#bdc1c6]">
+        <div className="flex items-center justify-between p-6 border-b-[0.5px] border-[#bdc1c6]">
           <h2
             id="side-overlay-title"
             className="text-lg font-bold text-[#bdc1c6]"
