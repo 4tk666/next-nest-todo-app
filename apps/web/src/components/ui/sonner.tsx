@@ -10,7 +10,14 @@ type ToasterProps = React.ComponentProps<typeof Sonner>
  */
 function Toaster({ ...props }: ToasterProps) {
   return (
-    <Sonner theme="light" position="top-right" expand richColors {...props} />
+    <Sonner
+      className="z-50"
+      theme="light"
+      position="top-right"
+      expand
+      richColors
+      {...props}
+    />
   )
 }
 

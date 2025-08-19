@@ -7,9 +7,11 @@ type ProjectDetailPageProps = {
 export default async function ProjectListPage({
   params,
 }: ProjectDetailPageProps) {
+  const { id: projectId } = await params
+
   return (
     <>
-      <TaskCreate />
+      <TaskCreate projectId={projectId} />
     </>
   )
 }

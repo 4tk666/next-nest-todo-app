@@ -4,12 +4,17 @@ import { Button } from '@/components/ui/button'
 import { SideOverlay } from '@/components/ui/side-overlay'
 import { clsx } from 'clsx'
 import { useState } from 'react'
+import { TaskForm } from './task-post-form'
+
+type TaskCreateProps = {
+  projectId: string
+}
 
 /**
  * Todoページのクライアント側コンポーネント
  * タスク追加モーダルの状態管理を担当
  */
-export function TaskCreate() {
+export function TaskCreate({ projectId }: TaskCreateProps) {
   const [isFormOpen, setIsFormOpen] = useState(false)
 
   const openForm = () => setIsFormOpen(true)
@@ -31,7 +36,7 @@ export function TaskCreate() {
           isOpen={isFormOpen}
           onClose={closeForm}
         >
-          <div>あとで追加する</div>
+          <TaskForm projectId={projectId} onCancel={closeForm} />
         </SideOverlay>
       )}
     </>
