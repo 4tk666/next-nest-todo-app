@@ -31,16 +31,16 @@ export function SideOverlay({
     >
       <div
         className={`
-          bg-white w-full max-w-md shadow-lg
+          w-full bg-[#222324] max-w-md shadow-lg
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}
-          flex flex-col border-t border-l h-[calc(100vh-64px)]
+          flex flex-col border-t-[0.5px] border-l-[0.5px] h-[calc(100vh-64px)]
         `}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-6 border-b-[0.5px] border-gray-[#bdc1c6]">
           <h2
             id="side-overlay-title"
-            className="text-lg font-bold text-gray-800"
+            className="text-lg font-bold text-[#bdc1c6]"
           >
             {title}
           </h2>
