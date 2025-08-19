@@ -24,12 +24,6 @@ export const createTaskSchema = z.object({
     .optional(),
 
   /**
-   * プロジェクトID
-   * タスクが属するプロジェクトのIDを指定します
-   */
-  projectId: z.string().min(1, 'プロジェクトIDは必須です'),
-
-  /**
    * 担当者のユーザーID
    * タスクの担当者を指定します（オプション）
    */

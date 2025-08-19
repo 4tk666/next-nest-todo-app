@@ -54,12 +54,13 @@ export class TaskService {
    * @param createTaskInput タスク作成データ
    * @returns 作成されたタスク
    */
-  async create(userId: string, createTaskInput: CreateTaskInput) {
+  async create(
+    userId: string,
+    createTaskInput: CreateTaskInput,
+    projectId: string,
+  ) {
     // ユーザーがプロジェクトのメンバーかどうかを確認
-    const hasProjectAccess = await this.checkProjectAccess(
-      userId,
-      createTaskInput.projectId,
-    )
+    const hasProjectAccess = await this.checkProjectAccess(userId, projectId)
     if (!hasProjectAccess) {
       throw new ForbiddenException(
         'このプロジェクトにタスクを作成する権限がありません',
@@ -70,7 +71,7 @@ export class TaskService {
     if (createTaskInput.assignedId) {
       const assignedUserHasAccess = await this.checkProjectAccess(
         createTaskInput.assignedId,
-        createTaskInput.projectId,
+        projectId,
       )
       if (!assignedUserHasAccess) {
         throw new ForbiddenException(
@@ -89,7 +90,7 @@ export class TaskService {
       data: {
         title: createTaskInput.title,
         description: createTaskInput.description || null,
-        projectId: createTaskInput.projectId,
+        projectId,
         assignedId: createTaskInput.assignedId || null,
         dueDate,
       },

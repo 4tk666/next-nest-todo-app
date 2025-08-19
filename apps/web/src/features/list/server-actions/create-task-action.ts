@@ -14,11 +14,11 @@ import { createTask } from '../api/task-api'
 export async function createTaskAction(
   _prevState: ActionState<void, CreateTaskInput> | undefined,
   formData: FormData,
+  projectId: string,
 ): Promise<ActionState<void, CreateTaskInput>> {
   const rawData = {
     title: formData.get('title')?.toString() || '',
     description: formData.get('description')?.toString(),
-    projectId: formData.get('projectId')?.toString() || '',
     assignedId: formData.get('assignedId')?.toString(),
     dueDate: formData.get('dueDate')?.toString()
       ? new Date(formData.get('dueDate')?.toString() || '')
@@ -42,7 +42,7 @@ export async function createTaskAction(
 
   try {
     // バックエンドAPIにタスク作成リクエストを送信
-    await createTask(validationResult.data)
+    await createTask(projectId, validationResult.data)
 
     return {
       success: true,
