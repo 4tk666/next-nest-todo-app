@@ -27,8 +27,8 @@ export function Button({
         )
       case 'outline':
         return cn(
-          'text-indigo-600 border border-indigo-600',
-          'bg-white hover:bg-indigo-50',
+          'text-[#bdc1c6] border-[0.5px] border-[#bdc1c6]',
+          'bg-transparent hover:text-white hover:font-bold hover:border-white',
           'focus-visible:outline-indigo-600',
           'disabled:border-gray-300 disabled:text-gray-300 disabled:bg-transparent',
         )
