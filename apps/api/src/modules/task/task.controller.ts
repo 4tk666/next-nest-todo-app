@@ -2,8 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
-  Query,
   Request,
   UseGuards,
 } from '@nestjs/common'
@@ -14,14 +14,13 @@ import {
 import { JwtAuthGuard } from 'src/common/jwt/guards/jwt-auth.guard'
 import { AuthenticatedRequest } from 'src/common/jwt/strategies/jwt.strategy'
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe'
-import { ProjectIdQuery, projectIdQuerySchema } from './scehma/task.schema'
 import { TaskService } from './task.service'
 
 /**
  * タスク関連のHTTPエンドポイントを管理するコントローラー
  * タスクの作成、取得機能を提供します
  */
-@Controller('tasks')
+@Controller('projects/:projectId/tasks')
 @UseGuards(JwtAuthGuard)
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
@@ -35,11 +34,10 @@ export class TaskController {
    */
   @Get()
   async getTasksByProject(
-    @Query(new ZodValidationPipe(projectIdQuerySchema))
-    query: ProjectIdQuery,
     @Request() req: AuthenticatedRequest,
+    @Param('projectId') projectId: string,
   ) {
-    return this.taskService.getTasksByProject(req.user.sub, query.projectId)
+    return this.taskService.getTasksByProject(req.user.sub, projectId)
   }
 
   /**
@@ -55,7 +53,8 @@ export class TaskController {
     @Request() req: AuthenticatedRequest,
     @Body(new ZodValidationPipe(createTaskSchema))
     createTaskInput: CreateTaskInput,
+    @Param('projectId') projectId: string,
   ) {
-    return this.taskService.create(req.user.sub, createTaskInput)
+    return this.taskService.create(req.user.sub, createTaskInput, projectId)
   }
 }

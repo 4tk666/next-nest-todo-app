@@ -3,12 +3,13 @@ import type { CreateTaskInput } from '@next-nest-todo-app/packages/schemas/task/
 
 /**
  * 新しいタスクを作成する
+ * @param projectId プロジェクトID
  * @param taskData タスク作成データ
  * @returns 作成されたタスク情報
  */
-export async function createTask(taskData: CreateTaskInput) {
+export async function createTask(projectId: string, taskData: CreateTaskInput) {
   return serverAuthenticatedWriteFetch({
-    path: '/tasks',
+    path: `/projects/${projectId}/tasks`,
     method: 'POST',
     body: taskData,
   })
