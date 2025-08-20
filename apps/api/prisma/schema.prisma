@@ -84,6 +84,7 @@ model Task {
   projectId   String // プロジェクトID
   assignedId  String? // 担当者のユーザーID（オプション）
   dueDate     DateTime?
+  isCompleted Boolean    @default(false) // タスクが完了したかどうか
   createdAt   DateTime   @default(now()) @db.Timestamp(0) // 作成日時
   updatedAt   DateTime   @updatedAt @db.Timestamp(0) // 更新日時
 

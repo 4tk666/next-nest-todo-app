@@ -45,9 +45,6 @@ export function TaskForm({ projectId, onSuccess, onCancel }: TodoFormProps) {
 
   return (
     <form action={action} className="space-y-6 text-left">
-      {/* プロジェクトIDの隠しフィールド */}
-      <input type="hidden" name="projectId" value={projectId} />
-
       {/* 全体エラーメッセージ */}
       {state?.error && <ErrorBanner message={state.error.message} />}
 
