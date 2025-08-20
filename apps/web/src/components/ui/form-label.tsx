@@ -9,7 +9,7 @@ type FormLabelProps = {
 
 export function FormLabel({ id, children, required = false }: FormLabelProps) {
   return (
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+    <label htmlFor={id} className="block text-sm font-medium text-[#bdc1c6]">
       {children}
       {required && (
         <span className="text-red-500 ml-1 text-lg" aria-label="必須項目">

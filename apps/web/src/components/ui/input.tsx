@@ -40,7 +40,7 @@ export function Input({
         'mt-1 block w-full',
         'p-1.5',
         'rounded-md border shadow-sm',
-        'text-gray-800 sm:text-sm',
+        'text-[#bdc1c6] sm:text-sm',
         // フォーカス状態・アウトライン
         'focus-visible:outline-2 focus-visible:outline-offset-2',
         hasErrors

@@ -3,9 +3,8 @@
 import { Button } from '@/components/ui/button'
 import { ErrorBanner } from '@/components/ui/error-banner'
 import { DateInputField } from '@/components/ui/fields/date-input-field'
+import { InputField } from '@/components/ui/fields/input-field'
 import { TextareaField } from '@/components/ui/fields/textarea-field'
-import { FormError } from '@/components/ui/form-error'
-import { Input } from '@/components/ui/input'
 import { formatDateToString } from '@/lib/utils/date-utils'
 import type { ActionState } from '@/types/form'
 import type { CreateTaskInput } from '@next-nest-todo-app/packages/schemas/task/create-task-schema'
@@ -53,21 +52,15 @@ export function TaskForm({ projectId, onSuccess, onCancel }: TodoFormProps) {
       {state?.error && <ErrorBanner message={state.error.message} />}
 
       <div>
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
-        >
-          タイトル
-        </label>
-        <Input
+        <InputField
           id="title"
+          label="タスクのタイトル"
           name="title"
           placeholder="タスクのタイトルを入力"
           disabled={isPending}
           defaultValue={state?.values?.title}
           errors={state?.error?.fields?.title}
         />
-        <FormError errors={state?.error?.fields?.title} id="title" />
       </div>
 
       <div>
