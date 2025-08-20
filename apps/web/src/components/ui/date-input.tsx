@@ -68,7 +68,7 @@ export function DateInput({
           hasError ? 'border-red-300' : 'border-gray-300',
           // 色・テキスト
           'text-sm placeholder-gray-400',
-          'bg-white',
+          'bg-[#222324] text-[#bdc1c6]',
           // 状態・インタラクション
           'focus-visible:outline-2 focus-visible:outline-offset-2',
           hasError

@@ -42,7 +42,7 @@ export function DateInputField({
               // レイアウト・配置
               'block',
               // 色・テキスト
-              'text-sm font-medium text-gray-700',
+              'text-sm font-medium text-[#bdc1c6]',
             )}
           >
             {label}
