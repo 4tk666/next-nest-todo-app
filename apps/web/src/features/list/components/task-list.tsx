@@ -73,7 +73,7 @@ function TaskSection({ title, tasks }: TaskSectionProps) {
             <TaskItem key={task.id} task={task} />
           ))}
           {tasks.length === 0 && (
-            <div className="py-3 text-center">まだタスクがありません。新しいタスクを作成してください。</div>
+            <div className="py-3 text-center">タスクがありません。</div>
           )}
         </div>
       }
