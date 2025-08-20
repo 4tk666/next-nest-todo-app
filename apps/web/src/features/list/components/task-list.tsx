@@ -1,5 +1,6 @@
 'use client'
 
+import { Accordion } from '@/components/ui/accordion'
 import {
   TASK_STATUS,
   TASK_STATUS_LABELS,
@@ -64,29 +65,19 @@ type TaskSectionProps = {
  */
 function TaskSection({ title, tasks }: TaskSectionProps) {
   return (
-    <div className="border-[0.5px] border-[#bdc1c6] rounded-lg">
-      {/* セクションヘッダー */}
-      <div
-        className={clsx(
-          'flex items-center justify-between',
-          'px-4 py-3',
-          'font-bold',
-        )}
-      >
-        <span>{title}</span>
-        <span className="text-sm">{tasks.length}</span>
-      </div>
-
-      {/* タスクリスト */}
-      <div>
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
-        {tasks.length === 0 && (
-          <div className="px-4 py-8 text-center">タスクを追加してください</div>
-        )}
-      </div>
-    </div>
+    <Accordion
+      title={title}
+      content={
+        <div>
+          {tasks.map((task) => (
+            <TaskItem key={task.id} task={task} />
+          ))}
+          {tasks.length === 0 && (
+            <div className="py-3 text-center">タスクがありません。</div>
+          )}
+        </div>
+      }
+    />
   )
 }
 
@@ -100,7 +91,7 @@ type TaskItemProps = {
  */
 function TaskItem({ task }: TaskItemProps) {
   return (
-    <div className="px-4 py-3 border-t-[0.5px] border-[#bdc1c6] first:border-t-0">
+    <div className="px-4 py-3 border-t-[0.5px] border-[#bdc1c6]">
       <div className="flex items-center justify-between">
         {/* タスク情報 */}
         <div className="flex items-center space-x-3 flex-1 min-w-0">
