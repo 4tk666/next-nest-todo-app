@@ -11,7 +11,7 @@ export const TASK_STATUS = {
 /**
  * タスクステータスの型定義
  */
-export type TaskStatus = typeof TASK_STATUS[keyof typeof TASK_STATUS]
+export type TaskStatus = (typeof TASK_STATUS)[keyof typeof TASK_STATUS]
 
 /**
  * タスクステータスの表示名マッピング
@@ -27,6 +27,9 @@ export const TASK_STATUS_LABELS = {
  */
 export const TASK_STATUS_OPTIONS = [
   { value: TASK_STATUS.TODO, label: TASK_STATUS_LABELS[TASK_STATUS.TODO] },
-  { value: TASK_STATUS.IN_PROGRESS, label: TASK_STATUS_LABELS[TASK_STATUS.IN_PROGRESS] },
+  {
+    value: TASK_STATUS.IN_PROGRESS,
+    label: TASK_STATUS_LABELS[TASK_STATUS.IN_PROGRESS],
+  },
   { value: TASK_STATUS.DONE, label: TASK_STATUS_LABELS[TASK_STATUS.DONE] },
 ] as const
