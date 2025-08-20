@@ -56,8 +56,6 @@ export function TaskList({ tasks }: TaskListProps) {
 type TaskSectionProps = {
   title: string
   tasks: Task[]
-  isCollapsible?: boolean
-  defaultExpanded?: boolean
 }
 
 /**
